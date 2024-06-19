@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ChildrenController;
+use App\Http\Controllers\Api\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/children', [ChildrenController::class, 'index']);
+Route::get('/children/{id}', [ChildrenController::class, 'show']);
+Route::post('/children', [ChildrenController::class, 'store']);
+Route::put('/children/{id}', [ChildrenController::class, 'update']);
+Route::delete('/children/{id}', [ChildrenController::class, 'destroy']);
+
+Route::get('/applications', [ApplicationController::class, 'index']);
+Route::get('/applications/{id}', [ApplicationController::class, 'show']);
+Route::post('/applications', [ApplicationController::class, 'store']);
+Route::put('/applications/{id}', [ApplicationController::class, 'update']);
+Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
+
+
+
