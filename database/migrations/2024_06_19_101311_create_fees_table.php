@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applications', function (Blueprint $table) {
+        Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('child_id')->constrained('children');
-            $table->string('status')->default('pending');
-            $table->dateTime('date_submitted')->nullable();
+            $table->foreignId('child_id')->constrained('children')->onDelete('cascade');
+            $table->decimal('amount', 8, 2);
+            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
+            $table->date('due_date');
+            $table->date('date_paid')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applications');
+        Schema::dropIfExists('fees');
     }
 };

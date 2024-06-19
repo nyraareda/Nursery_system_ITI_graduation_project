@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ChildrenController;
 use App\Http\Controllers\Api\ApplicationController;
+use App\Http\Controllers\Api\FeesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,12 @@ Route::get('/applications/{id}', [ApplicationController::class, 'show']);
 Route::post('/applications', [ApplicationController::class, 'store']);
 Route::put('/applications/{id}', [ApplicationController::class, 'update']);
 Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
+
+Route::get('/fees', [FeesController::class, 'index']);
+Route::get('/fees/{id}', [FeesController::class, 'show']);
+Route::post('/fees', [FeesController::class, 'store']);
+Route::put('/fees/{id}', [FeesController::class, 'update']);
+Route::delete('/fees/{id}', [FeesController::class, 'destroy']);
 
 
 

@@ -56,7 +56,7 @@ class ChildrenController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $children = $query->get();
+        $children = $query->with(['parent', 'fees'])->get();
         return ChildwithParentResource::collection($children);
     }
 

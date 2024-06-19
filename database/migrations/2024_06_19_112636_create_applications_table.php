@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('applications', function (Blueprint $table) {
+        Schema::create('applications', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('child_id')->constrained('children')->onDelete('cascade');
+            $table->string('status')->default('pending');
             $table->dateTime('date_submitted')->default(now())->change();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('applications', function (Blueprint $table) {
-            $table->dateTime('date_submitted')->change();
-        });
+        Schema::dropIfExists('applications');
     }
 };
