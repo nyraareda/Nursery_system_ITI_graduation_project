@@ -25,8 +25,4 @@ class Child extends Model
     {
         return $this->hasOne(Application::class);
     }
-    public function fees()
-    {
-        return $this->hasMany(Fee::class);
-    }
 }

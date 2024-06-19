@@ -23,7 +23,6 @@ class ChildwithParentResource extends JsonResource
             'photo' => $this->photo,
             'current_residence' => $this->current_residence,
             'parent_Child' => new ParentResource($this->parent),        
-            'fees_Child' =>FeesResource::collection($this->fees),       
         ];
     }
 }

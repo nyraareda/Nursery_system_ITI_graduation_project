@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ChildrenController;
 use App\Http\Controllers\Api\ApplicationController;
-use App\Http\Controllers\Api\FeesController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +17,15 @@ use App\Http\Controllers\Api\FeesController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => ['api'],
+    'prefix' => 'auth'
+], function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('email/verify/{id}', [AuthController::class, 'verify'])->name('verification.verify');
 });
 
 Route::get('/children', [ChildrenController::class, 'index']);
@@ -32,12 +39,6 @@ Route::get('/applications/{id}', [ApplicationController::class, 'show']);
 Route::post('/applications', [ApplicationController::class, 'store']);
 Route::put('/applications/{id}', [ApplicationController::class, 'update']);
 Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
-
-Route::get('/fees', [FeesController::class, 'index']);
-Route::get('/fees/{id}', [FeesController::class, 'show']);
-Route::post('/fees', [FeesController::class, 'store']);
-Route::put('/fees/{id}', [FeesController::class, 'update']);
-Route::delete('/fees/{id}', [FeesController::class, 'destroy']);
 
 
 
