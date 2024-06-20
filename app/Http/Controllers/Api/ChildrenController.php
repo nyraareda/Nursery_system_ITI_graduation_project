@@ -88,6 +88,7 @@ class ChildrenController extends Controller
             $child->photo = $originalFilename;
         } else {
             $child->photo = 'default.jpg';
+            
         }
 
         $child->save();
