@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ChildrenController;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ClassesController;
+use App\Http\Controllers\Api\SubjectsController;
+use App\Http\Controllers\Api\ActivitiesController;
+use App\Http\Controllers\Api\BusEnrollmentsController;
+use App\Http\Controllers\Api\GradesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SiblingController;
 /*
@@ -56,3 +61,36 @@ Route::get('notifications/{id}', [NotificationController::class, 'show']);
 Route::post('notifications', [NotificationController::class, 'store']);
 Route::put('notifications/{id}', [NotificationController::class, 'update']);
 Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
+
+
+Route::get('classes', [ClassesController::class, 'index']);
+Route::get('classes/{id}', [ClassesController::class, 'show']);
+Route::post('classes', [ClassesController::class, 'store']);
+Route::put('classes/{id}', [ClassesController::class, 'update']);
+Route::delete('classes/{id}', [ClassesController::class, 'destroy']);
+
+Route::get('subjects', [SubjectsController::class, 'index']);
+Route::get('subjects/{id}', [SubjectsController::class, 'show']);
+Route::post('subjects', [SubjectsController::class, 'store']);
+Route::put('subjects/{id}', [SubjectsController::class, 'update']);
+Route::delete('subjects/{id}', [SubjectsController::class, 'destroy']);
+
+Route::get('activities', [ActivitiesController::class, 'index']);
+Route::get('activities/{id}', [ActivitiesController::class, 'show']);
+Route::post('activities', [ActivitiesController::class, 'store']);
+Route::put('activities/{id}', [ActivitiesController::class, 'update']);
+Route::delete('activities/{id}', [ActivitiesController::class, 'destroy']);
+
+
+Route::get('bus-enrollments', [BusEnrollmentsController::class, 'index']);
+Route::get('bus-enrollments/{id}', [BusEnrollmentsController::class, 'show']);
+Route::post('bus-enrollments', [BusEnrollmentsController::class, 'store']);
+Route::put('bus-enrollments/{id}', [BusEnrollmentsController::class, 'update']);
+Route::delete('bus-enrollments/{id}', [BusEnrollmentsController::class, 'destroy']);
+
+
+Route::get('grades', [GradesController::class, 'index']);
+Route::get('grades/{id}', [GradesController::class, 'show']);
+Route::post('grades', [GradesController::class, 'store']);
+Route::put('grades/{id}', [GradesController::class, 'update']);
+Route::delete('grades/{id}', [GradesController::class, 'destroy']);
