@@ -40,7 +40,6 @@ class RegisterRequest extends FormRequest
             'username.required' => 'Username is required.',
             'username.string' => 'Username must be a string.',
             'username.between' => 'Username must be between :min and :max characters.',
-            'username.unique' => 'Username is already taken.',
             'email.required' => 'Email is required.',
             'email.string' => 'Email must be a string.',
             'email.email' => 'Invalid email format.',

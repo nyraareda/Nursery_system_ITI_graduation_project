@@ -6,7 +6,8 @@ use App\Http\Controllers\Api\ChildrenController;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\EnrollmentsController;
 use App\Http\Controllers\Api\AuthController;
-
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SiblingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,3 +49,16 @@ Route::post('/enrollments', [EnrollmentsController::class, 'store']);
 Route::put('/enrollments/{id}', [EnrollmentsController::class, 'update']);
 Route::delete('/enrollments/{id}', [EnrollmentsController::class, 'destroy']);
 
+// Sibling routes
+Route::get('siblings', [SiblingController::class, 'index']);
+Route::get('siblings/{id}', [SiblingController::class, 'show']);
+Route::post('siblings', [SiblingController::class, 'store']);
+Route::put('siblings/{id}', [SiblingController::class, 'update']);
+Route::delete('siblings/{id}', [SiblingController::class, 'destroy']);
+
+// Notification routes
+Route::get('notifications', [NotificationController::class, 'index']);
+Route::get('notifications/{id}', [NotificationController::class, 'show']);
+Route::post('notifications', [NotificationController::class, 'store']);
+Route::put('notifications/{id}', [NotificationController::class, 'update']);
+Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
