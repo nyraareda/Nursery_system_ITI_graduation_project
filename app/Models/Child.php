@@ -25,4 +25,9 @@ class Child extends Model
     {
         return $this->hasOne(Application::class);
     }
+    
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
 }
