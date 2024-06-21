@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ChildrenController;
 use App\Http\Controllers\Api\ApplicationController;
+use App\Http\Controllers\Api\EnrollmentsController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClassesController;
 use App\Http\Controllers\Api\SubjectsController;
@@ -47,6 +48,11 @@ Route::put('/applications/{id}', [ApplicationController::class, 'update']);
 Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
 
 
+Route::get('/enrollments', [EnrollmentsController::class, 'index']);
+Route::get('/enrollments/{id}', [EnrollmentsController::class, 'show']);
+Route::post('/enrollments', [EnrollmentsController::class, 'store']);
+Route::put('/enrollments/{id}', [EnrollmentsController::class, 'update']);
+Route::delete('/enrollments/{id}', [EnrollmentsController::class, 'destroy']);
 
 // Sibling routes
 Route::get('siblings', [SiblingController::class, 'index']);
