@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bus_enrollments', function (Blueprint $table) {
+        Schema::create('curriculums', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('child_id')->constrained('children')->onDelete('cascade');
-            $table->enum('status', ['enrolled', 'not enrolled'])->default('not enrolled');
+            $table->string('level');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bus_enrollments');
+        Schema::dropIfExists('curriculums');
     }
 };
