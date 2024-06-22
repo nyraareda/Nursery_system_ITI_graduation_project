@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CurriculumController;
 use App\Http\Controllers\Api\GradesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SiblingController;
+use App\Http\Controllers\Api\ParentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -100,3 +101,12 @@ Route::get('grades/{id}', [GradesController::class, 'show']);
 Route::post('grades', [GradesController::class, 'store']);
 Route::put('grades/{id}', [GradesController::class, 'update']);
 Route::delete('grades/{id}', [GradesController::class, 'destroy']);
+
+
+
+// Parent routes
+Route::get('parents', [ParentController::class, 'index']);
+Route::get('parents/{id}', [ParentController::class, 'show']);
+Route::post('parents', [ParentController::class, 'store']);
+Route::put('parents/{id}', [ParentController::class, 'update']);
+Route::delete('parents/{id}', [ParentController::class, 'destroy']);
