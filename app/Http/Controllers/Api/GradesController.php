@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Grade;
+use App\Http\Requests\StoreGradeRequest;
 use Illuminate\Http\Request;
 
 class GradesController extends Controller
@@ -49,4 +51,5 @@ class GradesController extends Controller
         $grade->delete();
         return response()->json(['message' => 'Grade deleted successfully']);
     }
+
 }

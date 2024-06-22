@@ -3,34 +3,36 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classes;
+use App\Http\Requests\StoreClassesRequest;
 use Illuminate\Http\Request;
 
 class ClassesController extends Controller
 {
     public function index()
     {
-        $classes = ClassModel::all();
+        $classes = Classes::all();
         return response()->json($classes);
     }
 
     public function show($id)
     {
-        $class = ClassModel::find($id);
+        $class = Classes::find($id);
         if (!$class) {
             return response()->json(['message' => 'Class not found'], 404);
         }
         return response()->json($class);
     }
 
-    public function store(StoreClassRequest $request)
+    public function store(StoreClassesRequest $request)
     {
-        $class = ClassModel::create($request->validated());
+        $class = Classes::create($request->validated());
         return response()->json($class, 201);
     }
 
-    public function update(StoreClassRequest $request, $id)
+    public function update(StoreClassesRequest $request, $id)
     {
-        $class = ClassModel::find($id);
+        $class = Classes::find($id);
         if (!$class) {
             return response()->json(['message' => 'Class not found'], 404);
         }
@@ -41,7 +43,7 @@ class ClassesController extends Controller
 
     public function destroy($id)
     {
-        $class = ClassModel::find($id);
+        $class = Classes::find($id);
         if (!$class) {
             return response()->json(['message' => 'Class not found'], 404);
         }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Subject;
+use App\Http\Requests\StoreSubjectRequest;
 use Illuminate\Http\Request;
 
 class SubjectsController extends Controller
