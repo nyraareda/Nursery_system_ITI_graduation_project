@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Models\Child;
@@ -10,20 +9,17 @@ use App\Http\Resources\ChildwithParentResource;
 use App\Http\Resources\ChildResource;
 use App\Trait\ApiResponse;
 use Illuminate\Support\Facades\File;
-
+use App\Models\Application;
 
 class ChildrenController extends Controller
 {
     use ApiResponse;
-    // public function index()
-    // {
-    //     $children = Child::with('parent')->get();
-    //     return ChildResource::collection($children);
-    // }
 
     public function index(Request $request)
     {
-        $query = Child::query();
+        $query = Child::with(['parent.user', 'applications' => function($query) {
+            $query->latest()->first();
+        }]);
 
         // Filtering by parent ID
         if ($request->has('parent_id')) {
@@ -35,7 +31,7 @@ class ChildrenController extends Controller
             $query->where('gender', $request->gender);
         }
 
-        //searching
+        // Searching
         if ($request->has('search')) {
             $searchQuery = $request->search;
             $query->where('full_name', 'like', "%$searchQuery%");
@@ -51,7 +47,6 @@ class ChildrenController extends Controller
                     $query->orderBy('created_at', 'asc');
                     break;
             }
-
         } else {
             $query->orderBy('created_at', 'desc');
         }
@@ -59,7 +54,6 @@ class ChildrenController extends Controller
         $children = $query->get();
         return ChildwithParentResource::collection($children);
     }
-
 
     public function show($id)
     {
@@ -81,7 +75,7 @@ class ChildrenController extends Controller
         $child->place_of_birth = $request->place_of_birth;
         $child->gender = $request->gender;
         $child->current_residence = $request->current_residence;
-
+    
         $imagePath = null;
         if ($request->hasFile('photo')) {
             $photo = $request->file('photo');
@@ -90,16 +84,21 @@ class ChildrenController extends Controller
             $imagePath = 'images/'.$imageName;
             $child->photo = $imagePath;
         }
-
+    
         $child->save();
-        return $this->successResponse(new ChildwithParentResource($child), 'Child added successfully');
+    
+        // Create a new application record associated with this child
+        $application = new Application;
+        $application->child_id = $child->id; // Link to the newly created child
+        $application->status = 'pending'; // Default status
+        $application->date_submitted = now(); // Timestamp of submission
+        $application->save();
+    
+        return $this->successResponse(new ChildwithParentResource($child), 'Child and corresponding application added successfully');
     }
     
-    
-
     public function update(ChildStoreRequest $request, $id)
     {
-
         $validatedData = $request->validated();
         $child = Child::find($id);
         if (!$child) {
