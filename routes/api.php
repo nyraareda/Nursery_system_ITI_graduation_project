@@ -55,7 +55,7 @@ Route::post('/enrollments', [EnrollmentsController::class, 'store']);
 Route::put('/enrollments/{id}', [EnrollmentsController::class, 'update']);
 Route::delete('/enrollments/{id}', [EnrollmentsController::class, 'destroy']);
 
-// Sibling routes
+
 Route::get('siblings', [SiblingController::class, 'index']);
 Route::get('siblings/{id}', [SiblingController::class, 'show']);
 Route::post('siblings', [SiblingController::class, 'store']);
@@ -75,12 +75,14 @@ Route::get('classes/{id}', [ClassesController::class, 'show']);
 Route::post('classes', [ClassesController::class, 'store']);
 Route::put('classes/{id}', [ClassesController::class, 'update']);
 Route::delete('classes/{id}', [ClassesController::class, 'destroy']);
+Route::get('classes/{id}/children', [ClassesController::class, 'children']);
 
 Route::get('subjects', [SubjectsController::class, 'index']);
 Route::get('subjects/{id}', [SubjectsController::class, 'show']);
 Route::post('subjects', [SubjectsController::class, 'store']);
 Route::put('subjects/{id}', [SubjectsController::class, 'update']);
 Route::delete('subjects/{id}', [SubjectsController::class, 'destroy']);
+Route::get('subjects/level/{levelId}', [SubjectsController::class, 'getByLevel']);
 
 Route::get('activities', [ActivitiesController::class, 'index']);
 Route::get('activities/{id}', [ActivitiesController::class, 'show']);

@@ -51,4 +51,10 @@ class SubjectsController extends Controller
         $subject->delete();
         return response()->json(['message' => 'Subject deleted successfully']);
     }
+
+    public function getByLevel($levelId)
+    {
+        $subjects = Subject::where('level_id', $levelId)->get();
+        return response()->json($subjects);
+    }
 }

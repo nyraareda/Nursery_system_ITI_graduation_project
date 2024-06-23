@@ -11,6 +11,7 @@ class Subject extends Model
 
     protected $fillable = [
         'class_id',
+        'level_id',
         'subject_name',
         'description'
     ];
@@ -18,6 +19,11 @@ class Subject extends Model
     public function classes()
     {
         return $this->belongsTo(Classes::class);
+    }
+
+    public function curriculum()
+    {
+        return $this->belongsTo(Curriculum::class, 'level_id');
     }
 
     public function grades()

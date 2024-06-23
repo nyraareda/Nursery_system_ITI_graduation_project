@@ -51,4 +51,18 @@ class ClassesController extends Controller
         $class->delete();
         return response()->json(['message' => 'Class deleted successfully']);
     }
+
+    public function children($id)
+    {
+        $class = Classes::with('enrollments.child')->find($id);
+        if (!$class) {
+            return response()->json(['message' => 'Class not found'], 404);
+        }
+
+        $children = $class->enrollments->map(function ($enrollment) {
+            return $enrollment->child;
+        });
+
+        return response()->json($children);
+    }
 }
