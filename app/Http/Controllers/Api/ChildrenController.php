@@ -82,18 +82,20 @@ class ChildrenController extends Controller
         $child->gender = $request->gender;
         $child->current_residence = $request->current_residence;
 
+        $imagePath = null;
         if ($request->hasFile('photo')) {
-            $originalFilename = $request->photo->getClientOriginalName();
-            $request->photo->move(public_path('images'), $originalFilename);
-            $child->photo = $originalFilename;
-        } else {
-            $child->photo = 'default.jpg';
-            
+            $photo = $request->file('photo');
+            $imageName = time().'.'.$photo->getClientOriginalExtension();
+            $photo->move(public_path('images'), $imageName);
+            $imagePath = 'images/'.$imageName;
+            $child->photo = $imagePath;
         }
 
         $child->save();
         return $this->successResponse(new ChildwithParentResource($child), 'Child added successfully');
     }
+    
+    
 
     public function update(ChildStoreRequest $request, $id)
     {
@@ -106,12 +108,31 @@ class ChildrenController extends Controller
 
         $child->fill($validatedData);
 
+        if ($request->has('parent_id')) {
+            $child->parent_id = $request->parent_id;
+        }
+        if ($request->has('full_name')) {
+            $child->full_name = $request->full_name;
+        }
+        if ($request->has('birthdate')) {
+            $child->birthdate = $request->birthdate;
+        }
+        if ($request->has('place_of_birth')) {
+            $child->place_of_birth = $request->place_of_birth;
+        }
+        if ($request->has('gender')) {
+            $child->gender = $request->gender;
+        }
+        if ($request->has('current_residence')) {
+            $child->current_residence = $request->current_residence;
+        }
+        
         if ($request->hasFile('photo')) {
-            $originalFilename = $request->photo->getClientOriginalName();
-            $request->photo->move(public_path('photos'), $originalFilename);
-            $child->photo = $originalFilename;
-        } else {
-            $child->photo = 'default.jpg';
+            $photo = $request->file('photo');
+            $imageName = time().'.'.$photo->getClientOriginalExtension();
+            $photo->move(public_path('images'), $imageName);
+            $imagePath = 'images/'.$imageName;
+            $child->photo = $imagePath;
         }
 
         $child->save();

@@ -62,7 +62,7 @@ class FeesController extends Controller
     }
 
     public function store(FeeStoreRequest $request)
-{
+    {
     $fee = new Fee;
     $fee->child_id = $request->child_id;
     $fee->amount = $request->amount;
