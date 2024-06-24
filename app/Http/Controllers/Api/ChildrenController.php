@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\Child;
@@ -51,11 +52,10 @@ class ChildrenController extends Controller
     
         $child->save();
     
-        // Create a new application record associated with this child
         $application = new Application;
-        $application->child_id = $child->id; // Link to the newly created child
-        $application->status = 'pending'; // Default status
-        $application->date_submitted = now(); // Timestamp of submission
+        $application->child_id = $child->id;
+        $application->status = 'pending';
+        $application->date_submitted = now();
         $application->save();
     
         return $this->successResponse(new ChildwithParentResource($child), 'Child and corresponding application added successfully');
