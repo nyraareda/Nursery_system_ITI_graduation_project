@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\GradesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SiblingController;
 use App\Http\Controllers\Api\ParentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,26 +37,30 @@ Route::group([
     Route::get('email/verify/{id}', [AuthController::class, 'verify'])->name('verification.verify');
 });
 
+// Children routes with resolved conflict
 Route::get('/children', [ChildrenController::class, 'index']);
 Route::get('/children/{id}', [ChildrenController::class, 'show']);
 Route::post('/children', [ChildrenController::class, 'store']);
 Route::put('/children/{id}', [ChildrenController::class, 'update']);
 Route::delete('/children/{id}', [ChildrenController::class, 'destroy']);
+Route::put('children/{id}/update-status', [ChildrenController::class, 'updateStatus']);
+Route::get('/parents/{parentId}/children', [ChildrenController::class, 'getChildrenByParentId']);
 
+// Application routes
 Route::get('/applications', [ApplicationController::class, 'index']);
 Route::get('/applications/{id}', [ApplicationController::class, 'show']);
 Route::post('/applications', [ApplicationController::class, 'store']);
 Route::put('/applications/{id}', [ApplicationController::class, 'update']);
 Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
 
-
+// Enrollment routes
 Route::get('/enrollments', [EnrollmentsController::class, 'index']);
 Route::get('/enrollments/{id}', [EnrollmentsController::class, 'show']);
 Route::post('/enrollments', [EnrollmentsController::class, 'store']);
 Route::put('/enrollments/{id}', [EnrollmentsController::class, 'update']);
 Route::delete('/enrollments/{id}', [EnrollmentsController::class, 'destroy']);
 
-
+// Sibling routes
 Route::get('siblings', [SiblingController::class, 'index']);
 Route::get('siblings/{id}', [SiblingController::class, 'show']);
 Route::post('siblings', [SiblingController::class, 'store']);
@@ -69,7 +74,7 @@ Route::post('notifications', [NotificationController::class, 'store']);
 Route::put('notifications/{id}', [NotificationController::class, 'update']);
 Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
 
-
+// Class routes
 Route::get('classes', [ClassesController::class, 'index']);
 Route::get('classes/{id}', [ClassesController::class, 'show']);
 Route::post('classes', [ClassesController::class, 'store']);
@@ -77,6 +82,7 @@ Route::put('classes/{id}', [ClassesController::class, 'update']);
 Route::delete('classes/{id}', [ClassesController::class, 'destroy']);
 Route::get('classes/{id}/children', [ClassesController::class, 'children']);
 
+// Subject routes
 Route::get('subjects', [SubjectsController::class, 'index']);
 Route::get('subjects/{id}', [SubjectsController::class, 'show']);
 Route::post('subjects', [SubjectsController::class, 'store']);
@@ -84,27 +90,26 @@ Route::put('subjects/{id}', [SubjectsController::class, 'update']);
 Route::delete('subjects/{id}', [SubjectsController::class, 'destroy']);
 Route::get('subjects/level/{levelId}', [SubjectsController::class, 'getByLevel']);
 
+// Activity routes
 Route::get('activities', [ActivitiesController::class, 'index']);
 Route::get('activities/{id}', [ActivitiesController::class, 'show']);
 Route::post('activities', [ActivitiesController::class, 'store']);
 Route::put('activities/{id}', [ActivitiesController::class, 'update']);
 Route::delete('activities/{id}', [ActivitiesController::class, 'destroy']);
 
+// Curriculum routes
 Route::get('curriculums', [CurriculumController::class, 'index']);
 Route::get('curriculums/{id}', [CurriculumController::class, 'show']);
 Route::post('curriculums', [CurriculumController::class, 'store']);
 Route::put('curriculums/{id}', [CurriculumController::class, 'update']);
 Route::delete('curriculums/{id}', [CurriculumController::class, 'destroy']);
 
-
-
+// Grade routes
 Route::get('grades', [GradesController::class, 'index']);
 Route::get('grades/{id}', [GradesController::class, 'show']);
 Route::post('grades', [GradesController::class, 'store']);
 Route::put('grades/{id}', [GradesController::class, 'update']);
 Route::delete('grades/{id}', [GradesController::class, 'destroy']);
-
-
 
 // Parent routes
 Route::get('parents', [ParentController::class, 'index']);
