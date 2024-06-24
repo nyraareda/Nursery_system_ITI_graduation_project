@@ -51,4 +51,5 @@ class CurriculumController extends Controller
         $curriculum->delete();
         return response()->json(['message' => 'Curriculum deleted successfully']);
     }
+    
 }

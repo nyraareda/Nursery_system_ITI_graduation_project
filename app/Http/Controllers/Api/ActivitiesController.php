@@ -11,13 +11,13 @@ class ActivitiesController extends Controller
 {
     public function index()
     {
-        $activities = Activity::all();
+        $activities = Activity::with('child')->get(); // Eager load child relationship
         return response()->json($activities);
     }
 
     public function show($id)
     {
-        $activity = Activity::find($id);
+        $activity = Activity::with('child')->find($id); // Eager load child relationship
         if (!$activity) {
             return response()->json(['message' => 'Activity not found'], 404);
         }
