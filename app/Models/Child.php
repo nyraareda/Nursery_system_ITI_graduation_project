@@ -22,10 +22,11 @@ class Child extends Model
     }
 
 
-    public function applications() {
-        return $this->hasMany(Application::class);
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'child_id');
     }
-    
+
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class);

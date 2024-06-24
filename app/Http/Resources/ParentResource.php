@@ -22,7 +22,7 @@ class ParentResource extends JsonResource
             'job_title' => $this->job_title,
             // 'workplace' => $this->workplace,
             // 'work_phone' => $this->work_phone,
-            // 'personal_phone' => $this->personal_phone,
+            'personal_phone' => $this->personal_phone,
             'address' => $this->address,
             // 'home_phone' => $this->home_phone,
             // 'street_number' => $this->street_number,
