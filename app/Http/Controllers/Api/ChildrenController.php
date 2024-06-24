@@ -15,6 +15,14 @@ class ChildrenController extends Controller
 {
     use ApiResponse;
 
+
+    public function getChildrenByParentId($parentId)
+    {
+        $children = Child::where('parent_id', $parentId)->get();
+        
+        return $this->successResponse(ChildwithParentResource::collection($children), 'Children fetched successfully');
+    }
+
     public function index(Request $request)
     {
         $query = Child::with(['parent.user', 'applications' => function($query) {
