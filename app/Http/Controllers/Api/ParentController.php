@@ -77,4 +77,5 @@
             $parent->delete();
             return response()->json(null, 204);
         }
+        
     }

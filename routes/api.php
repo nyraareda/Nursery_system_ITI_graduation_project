@@ -41,6 +41,8 @@ Route::get('/children/{id}', [ChildrenController::class, 'show']);
 Route::post('/children', [ChildrenController::class, 'store']);
 Route::put('/children/{id}', [ChildrenController::class, 'update']);
 Route::delete('/children/{id}', [ChildrenController::class, 'destroy']);
+Route::put('children/{id}/update-status', [ChildrenController::class, 'updateStatus']);
+
 
 Route::get('/applications', [ApplicationController::class, 'index']);
 Route::get('/applications/{id}', [ApplicationController::class, 'show']);
