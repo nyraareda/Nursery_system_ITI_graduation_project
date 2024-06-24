@@ -39,25 +39,22 @@ class EnrollmentsController extends Controller
             $enroll->class_id = $request->class_id;
             $enroll->description= $request->description;
             $enroll->status = $request->status;
-            $enroll->data_enrolled = now();
+            $enroll->date_enrolled = now();
             $enroll->save();
             
             return $this->successResponse(new EnrollmentsResource($enroll), 'Enrollment added successfully');
         }
 
-        public function update(Request $request, $id)
+        public function update(EnrollmentStoreRequest $request, $id)
     {
-        // Validate incoming request data
         $validatedData = $request->validated();
 
-        // Find the enrollment by ID
         $enrollment = Enrollment::find($id);
     
         if (! $enrollment) {
             return $this->errorResponse('Enrollment not found', 404);
         }
 
-        // Update the enrollment with validated data
         $enrollment->fill($validatedData);
             $enrollment->date_enrolled = now();
             $enrollment->save();
