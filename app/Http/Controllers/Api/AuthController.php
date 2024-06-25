@@ -26,14 +26,28 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    // public function login(LoginRequest $request){
+    //     $credentials = $request->only('email', 'password');
+
+    //     if (! $token = Auth::attempt($credentials)) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+
+    //     return $this->createNewToken($token);
+    // }
     public function login(LoginRequest $request){
         $credentials = $request->only('email', 'password');
-
+    
         if (! $token = Auth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        return $this->createNewToken($token);
+        $user = Auth::user();
+        $isParent = \DB::table('parents')->where('user_id', $user->id)->exists();
+    
+        $additionalData = [
+            'parent' => $isParent
+        ];
+        return $this->createNewToken($token, $additionalData);
     }
 
     /**
@@ -94,12 +108,13 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function createNewToken($token){
+    protected function createNewToken($token,$additionalData = []){
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'user' => auth()->user(),
+            'additional_data' => $additionalData 
         ]);
     }
 
