@@ -11,13 +11,13 @@ class ClassesController extends Controller
 {
     public function index()
     {
-        $classes = Classes::all();
+        $classes = Classes::with(['children', 'subjects.grades', 'activities'])->get();
         return response()->json($classes);
     }
 
     public function show($id)
     {
-        $class = Classes::find($id);
+        $class = Classes::with(['children', 'subjects.grades', 'activities'])->find($id);
         if (!$class) {
             return response()->json(['message' => 'Class not found'], 404);
         }
@@ -54,15 +54,11 @@ class ClassesController extends Controller
 
     public function children($id)
     {
-        $class = Classes::with('enrollments.child')->find($id);
+        $class = Classes::with('children')->find($id);
         if (!$class) {
             return response()->json(['message' => 'Class not found'], 404);
         }
 
-        $children = $class->enrollments->map(function ($enrollment) {
-            return $enrollment->child;
-        });
-
-        return response()->json($children);
+        return response()->json($class->children);
     }
 }

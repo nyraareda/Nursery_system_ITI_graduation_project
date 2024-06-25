@@ -17,11 +17,11 @@ class Grade extends Model
 
     public function child()
     {
-        return $this->belongsTo(Child::class);
+        return $this->belongsTo(Child::class, 'child_id');
     }
 
     public function subject()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
 }

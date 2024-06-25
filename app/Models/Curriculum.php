@@ -13,9 +13,21 @@ class Curriculum extends Model
         'level',
         'description'
     ];
+
     protected $table = 'curriculums';
+
     public function classes()
     {
-        return $this->hasMany(Classes::class);
+        return $this->hasMany(Classes::class, 'curriculum_id');
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class, 'level_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasManyThrough(Activity::class, Classes::class, 'curriculum_id', 'class_id');
     }
 }

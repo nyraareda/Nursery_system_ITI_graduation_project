@@ -16,9 +16,9 @@ class Subject extends Model
         'description'
     ];
 
-    public function classes()
+    public function class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 
     public function curriculum()
@@ -28,6 +28,6 @@ class Subject extends Model
 
     public function grades()
     {
-        return $this->hasMany(Grade::class);
+        return $this->hasMany(Grade::class, 'subject_id');
     }
 }

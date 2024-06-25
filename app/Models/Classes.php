@@ -17,21 +17,26 @@ class Classes extends Model
 
     public function curriculum()
     {
-        return $this->belongsTo(Curriculum::class);
+        return $this->belongsTo(Curriculum::class, 'curriculum_id');
     }
 
     public function activities()
     {
-        return $this->hasMany(Activity::class);
+        return $this->hasMany(Activity::class, 'class_id');
     }
 
     public function enrollments()
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasMany(Enrollment::class, 'class_id');
     }
 
     public function subjects()
     {
-        return $this->hasMany(Subject::class);
+        return $this->hasMany(Subject::class, 'class_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Child::class, 'class_id');
     }
 }

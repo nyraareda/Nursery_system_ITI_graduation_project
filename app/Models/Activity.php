@@ -16,8 +16,13 @@ class Activity extends Model
         'description'
     ];
 
-    public function classes()
+    public function class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'class_id');
+    }
+
+    public function child()
+    {
+        return $this->belongsTo(Child::class, 'child_id');
     }
 }
