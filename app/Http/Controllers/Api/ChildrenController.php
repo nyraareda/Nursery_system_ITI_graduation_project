@@ -119,23 +119,6 @@ class ChildrenController extends Controller
 
         return $this->successResponse(null, 'Child deleted successfully');
     }
-    // ChildrenController.php
-    public function updateStatus(Request $request, $id)
-    {
-        $child = Child::with('applications')->find($id);
-        if (!$child) {
-            return $this->errorResponse('Child not found', 404);
-        }
-    
-        $application = $child->applications()->first(); // Assuming one application per child
-        if ($application) {
-            $application->status = $request->get('status');
-            $application->save(); // Save the application status change
-            return $this->successResponse(new ChildwithParentResource($child), 'Application status updated successfully');
-        } else {
-            return $this->errorResponse('Application not found', 404);
-        }
-    }
     
 
 }

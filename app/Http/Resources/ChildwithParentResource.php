@@ -29,9 +29,12 @@ class ChildwithParentResource extends JsonResource
                 ]
             ],
             'application' => [
+                'id' =>  $this->applications->first() ? $this->applications->first()->id : 'N/A',
                 'status' => $this->applications->first() ? $this->applications->first()->status : 'N/A',
                 'date_submitted' => $this->applications->first() ? $this->applications->first()->date_submitted : 'N/A',
-            ]
+            ],
+            'grades' => GradeResource::collection($this->whenLoaded('grades')),
+            'subjects' => SubjectResource::collection($this->whenLoaded('subjects')),
         ];
     }
 }

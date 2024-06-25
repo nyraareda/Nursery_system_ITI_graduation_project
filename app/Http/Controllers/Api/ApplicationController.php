@@ -80,22 +80,25 @@ class ApplicationController extends Controller
         return $this->successResponse(new ApplicationResource($application), 'Application added successfully');
     }
 
-    public function update(ApplicationStoreRequest $request, $id)
-    {
-        $validatedData = $request->validated();
+    public function update(Request $request, $id) {
         $application = Application::find($id);
-
+    
         if (!$application) {
-            return response()->json(['error' => 'Application not found'], 404);
+            return $this->errorResponse('Application not found', 404);
         }
 
-        $application->fill($validatedData);
-        $application->date_submitted = now();
+        $status = $request->input('status'); // Use a default value to avoid issues
+    
+        if (empty($status)) {
+            return $this->errorResponse('Status is required', 400);
+        }
+    
+        $application->status = $status;
         $application->save();
-
-        return $this->successResponse(new ApplicationResource($application), 'Application updated successfully');
+    
+        return $this->successResponse(new ApplicationResource($application), 'Application status updated successfully');
     }
-
+    
     public function destroy($id)
     {
         $application = Application::find($id);
