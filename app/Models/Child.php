@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Parents;
 
 class Child extends Model
 {
+    use HasFactory;
 
     protected $fillable = [
         'parent_id',
@@ -13,22 +15,27 @@ class Child extends Model
         'birthdate',
         'place_of_birth',
         'gender',
-        'photo',
         'current_residence',
-        
+        'photo',
     ];
-    public function parent(){
-        return $this->belongsTo(Parents::class, 'parent_id');
-    }
 
+    public function parent()
+    {
+        return $this->belongsTo(Parents::class, 'parent_id') ;
+    }
 
     public function applications()
     {
-        return $this->hasMany(Application::class, 'child_id');
+        return $this->hasMany(Application::class);
     }
 
-    public function enrollments()
+    public function grades()
     {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasMany(Grade::class);
+    }
+
+    public function subjects()
+    {
+        return $this->hasManyThrough(Subject::class, Grade::class, 'child_id', 'id', 'id', 'subject_id');
     }
 }

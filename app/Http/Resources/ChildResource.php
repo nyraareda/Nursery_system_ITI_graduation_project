@@ -21,7 +21,8 @@ class ChildResource extends JsonResource
             'place_of_birth' => $this->place_of_birth,
             'gender' => $this->gender,
             'photo' => $this->photo,
-            'current_residence' => $this->current_residence,      
+            'current_residence' => $this->current_residence,
+           
         ];
     }
 }

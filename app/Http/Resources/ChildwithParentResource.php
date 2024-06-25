@@ -22,19 +22,19 @@ class ChildwithParentResource extends JsonResource
                 'last_name' => $this->parent->last_name,
                 'job_title' => $this->parent->job_title,
                 'address' => $this->parent->address,
-                'Personal Phone'=>$this->parent->p,
-                'user' => [ 
+                'personal_phone' => $this->parent->user->phone,
+                'user' => [
                     'email' => $this->parent->user->email,
-                    'phone' => $this->parent->user->phone
+                    'phone' => $this->parent->user->phone,
                 ]
             ],
             'application' => [
-                'id' =>  $this->applications->first() ? $this->applications->first()->id : 'N/A',
+                'id' => $this->applications->first() ? $this->applications->first()->id : 'N/A',
                 'status' => $this->applications->first() ? $this->applications->first()->status : 'N/A',
                 'date_submitted' => $this->applications->first() ? $this->applications->first()->date_submitted : 'N/A',
             ],
             'grades' => GradeResource::collection($this->whenLoaded('grades')),
-            'subjects' => SubjectResource::collection($this->whenLoaded('subjects')),
+            'subjects' => SubjectResource::collection($this->whenLoaded('subjects'))
         ];
     }
 }
