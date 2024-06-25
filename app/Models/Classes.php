@@ -37,6 +37,6 @@ class Classes extends Model
 
     public function children()
     {
-        return $this->hasMany(Child::class, 'class_id');
+        return $this->hasManyThrough(Child::class, Enrollment::class, 'class_id', 'id', 'id', 'child_id');
     }
 }

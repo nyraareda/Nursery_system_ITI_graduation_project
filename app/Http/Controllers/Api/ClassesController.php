@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Http\Requests\StoreClassesRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\ClassesResource;
 
 class ClassesController extends Controller
 {
     public function index()
     {
         $classes = Classes::with(['children', 'subjects.grades', 'activities'])->get();
-        return response()->json($classes);
+        return ClassesResource::collection($classes);
     }
 
     public function show($id)
@@ -21,7 +22,7 @@ class ClassesController extends Controller
         if (!$class) {
             return response()->json(['message' => 'Class not found'], 404);
         }
-        return response()->json($class);
+        return new ClassesResource($class);
     }
 
     public function store(StoreClassesRequest $request)
