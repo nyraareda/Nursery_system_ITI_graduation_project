@@ -11,6 +11,7 @@ use App\Http\Resources\ChildwithParentResource;
 use App\Trait\ApiResponse;
 use Illuminate\Support\Facades\File;
 use App\Models\Application;
+use App\Models\Enrollment;
 
 class ChildrenController extends Controller
 {

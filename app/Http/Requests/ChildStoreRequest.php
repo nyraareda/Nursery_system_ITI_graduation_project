@@ -21,8 +21,8 @@ class ChildStoreRequest extends FormRequest
             'gender' => ['required', 'in:male,female,other'],
             'current_residence' => ['required', 'string', 'min:3'],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-            'class_id' => ['required', 'exists:classes,id'],
-            'curriculum_id' => ['required', 'exists:curriculums,id'],
+            'class_id' => 'sometimes|nullable|integer|exists:classes,id',
+            'curriculum_id' => 'nullable|integer|exists:curriculums,id',        
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
