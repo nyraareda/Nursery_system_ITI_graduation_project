@@ -6,22 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCurriculumRequest;
 use App\Models\Curriculum;
 use Illuminate\Http\Request;
+use App\Http\Resources\CurriculumResource;
 
 class CurriculumController extends Controller
 {
     public function index()
     {
-        $curriculums = Curriculum::with(['classes.children', 'subjects', 'activities'])->get();
-        return response()->json($curriculums);
+        $curriculums = Curriculum::with(['classes', 'subjects', 'activities'])->get();
+        return CurriculumResource::collection($curriculums);
     }
 
     public function show($id)
     {
-        $curriculum = Curriculum::with(['classes.children', 'subjects', 'activities'])->find($id);
+        $curriculum = Curriculum::with(['classes', 'subjects', 'activities'])->find($id);
         if (!$curriculum) {
             return response()->json(['message' => 'Curriculum not found'], 404);
         }
-        return response()->json($curriculum);
+        return new CurriculumResource($curriculum);
     }
 
     public function store(StoreCurriculumRequest $request)
