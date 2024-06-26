@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ChildStoreRequest;
 use App\Http\Resources\ChildwithParentResource;
-use App\Traits\ApiResponse;
+use App\Trait\ApiResponse;
 use Illuminate\Support\Facades\File;
 use App\Models\Application;
 
@@ -119,20 +119,4 @@ class ChildrenController extends Controller
         return $this->successResponse(null, 'Child deleted successfully');
     }
 
-    public function updateStatus(Request $request, $id)
-    {
-        $child = Child::with('applications')->find($id);
-        if (!$child) {
-            return $this->errorResponse('Child not found', 404);
-        }
-
-        $application = $child->applications()->first(); // Assuming one application per child
-        if ($application) {
-            $application->status = $request->get('status');
-            $application->save(); // Save the application status change
-            return $this->successResponse(new ChildwithParentResource($child), 'Application status updated successfully');
-        } else {
-            return $this->errorResponse('Application not found', 404);
-        }
-    }
 }
