@@ -3,33 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Grade;
 use App\Http\Requests\StoreGradeRequest;
+use App\Models\Grade;
 use Illuminate\Http\Request;
-use App\Http\Resources\GradeWithSubjectResource;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\GradeResource;
 
 class GradesController extends Controller
 {
     public function index()
     {
-        $grades = Grade::all();
-        return response()->json($grades);
+        $grades = Grade::with('subject')->get();
+        return GradeResource::collection($grades);
     }
 
     public function show($id)
     {
-        $grade = Grade::find($id);
+        $grade = Grade::with('subject')->find($id);
         if (!$grade) {
             return response()->json(['message' => 'Grade not found'], 404);
         }
-        return response()->json($grade);
+        return new GradeResource($grade);
     }
 
     public function store(StoreGradeRequest $request)
     {
         $grade = Grade::create($request->validated());
-        return response()->json($grade, 201);
+        return new GradeResource($grade);
     }
 
     public function update(StoreGradeRequest $request, $id)
@@ -40,7 +39,7 @@ class GradesController extends Controller
         }
 
         $grade->update($request->validated());
-        return response()->json($grade);
+        return new GradeResource($grade);
     }
 
     public function destroy($id)
@@ -62,36 +61,6 @@ class GradesController extends Controller
             return response()->json(['message' => 'No grades found for this child.'], 404);
         }
 
-        return GradeWithSubjectResource::collection($grades);
+        return GradeResource::collection($grades);
     }
-    public function updateGradesByChild(Request $request, $child_id)
-    {
-        $validator = Validator::make($request->all(), [
-            '*.id' => 'required|exists:grades,id',
-            '*.grade' => 'required|numeric|min:0|max:100',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $gradesData = $request->all();
-
-        foreach ($gradesData as $gradeData) {
-            $grade = Grade::where('child_id', $child_id)
-                ->where('id', $gradeData['id'])
-                ->first();
-
-            if ($grade) {
-                $grade->update([
-                    'grade' => $gradeData['grade'],
-                ]);
-            }
-        }
-
-        $updatedGrades = Grade::with('subject')->where('child_id', $child_id)->get();
-
-        return GradeWithSubjectResource::collection($updatedGrades);
-    }
-
 }
