@@ -25,8 +25,8 @@ class ChildrenController extends Controller
     
         public function index(Request $request)
     {
-        $children = Child::with(['parent.user', 'applications', 'grades.subject'])->paginate(2); // Adjust '10' as per your pagination needs
-
+        // $children = Child::with(['parent.user', 'applications', 'grades.subject'])->paginate(2); // Adjust '10' as per your pagination needs
+        $children = Child::with(['parent.user', 'applications', 'grades.subject'])->get();
         return ChildwithParentResource::collection($children);
     }
     
