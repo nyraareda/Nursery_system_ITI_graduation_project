@@ -10,7 +10,7 @@ class Parents extends Model
     use HasFactory;
 
     protected $table = 'parents';
-    
+
     protected $fillable = [
         'user_id',
         'first_name',
@@ -30,8 +30,9 @@ class Parents extends Model
     {
         return $this->hasMany(Child::class, 'parent_id');
     }
-    public function user() {
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    
 }

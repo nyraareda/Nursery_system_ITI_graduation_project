@@ -27,14 +27,7 @@ class ParentResource extends JsonResource
             'home_phone' => $this->home_phone,
             'street_number' => $this->street_number,
             'apartment_number' => $this->apartment_number,
-            'children' => $this->children->map(function ($child) {
-                return [
-                    'full_name' => $child->full_name,
-                    'birthdate' => $child->birthdate,
-                    'place_of_birth' => $child->place_of_birth,
-                    'gender' => $child->gender,
-                ];
-            }),
+            'children' => ChildResource::collection($this->whenLoaded('children')),
         ];
     }
 }

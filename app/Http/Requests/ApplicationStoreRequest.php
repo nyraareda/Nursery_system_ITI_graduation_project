@@ -23,13 +23,12 @@ class ApplicationStoreRequest extends FormRequest
     {
         $rules = [
             'child_id' => ['required', 'exists:children,id'],
-            'status' => ['required', 'in:pending,approved,rejected'],
-        ];
+            'status' => 'required|in:pending,accepted,rejected',        ];
 
         // If the request is for updating, make some fields nullable
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
             $rules['child_id'] = ['sometimes', 'nullable', 'exists:child,id'];
-            $rules['status'] = ['sometimes', 'nullable', 'in:pending,approved,rejected'];
+            $rules['status'] = ['sometimes', 'nullable', 'in:pending,accepted,rejected'];
         }
 
         return $rules;
