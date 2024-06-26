@@ -64,37 +64,35 @@ class GradesController extends Controller
 
         return GradeWithSubjectResource::collection($grades);
     }
-
     public function updateGradesByChild(Request $request, $child_id)
     {
         $validator = Validator::make($request->all(), [
             '*.id' => 'required|exists:grades,id',
-            '*.subject_id' => 'required|exists:subjects,id',
             '*.grade' => 'required|numeric|min:0|max:100',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+    
         $gradesData = $request->all();
-
+    
         foreach ($gradesData as $gradeData) {
             $grade = Grade::where('child_id', $child_id)
                 ->where('id', $gradeData['id'])
                 ->first();
-
+    
             if ($grade) {
                 $grade->update([
-                    'subject_id' => $gradeData['subject_id'],
-                    'grade' => $gradeData['grade']
+                    'grade' => $gradeData['grade'],
                 ]);
             }
         }
-
+    
         $updatedGrades = Grade::with('subject')->where('child_id', $child_id)->get();
-
+    
         return GradeWithSubjectResource::collection($updatedGrades);
     }
+    
 }
 
