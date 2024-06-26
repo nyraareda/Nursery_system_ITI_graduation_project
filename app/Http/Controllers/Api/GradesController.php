@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Grade;
 use App\Http\Requests\StoreGradeRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\GradeWithSubjectResource;
+use Illuminate\Support\Facades\Validator;
 
 class GradesController extends Controller
 {
@@ -51,15 +53,48 @@ class GradesController extends Controller
         $grade->delete();
         return response()->json(['message' => 'Grade deleted successfully']);
     }
+
     public function getGradesByChild($child_id)
     {
-        $grades = Grade::where('child_id', $child_id)->get();
+        $grades = Grade::with('subject')->where('child_id', $child_id)->get();
 
         if ($grades->isEmpty()) {
             return response()->json(['message' => 'No grades found for this child.'], 404);
         }
 
-        return response()->json($grades);
+        return GradeWithSubjectResource::collection($grades);
     }
 
+    public function updateGradesByChild(Request $request, $child_id)
+    {
+        $validator = Validator::make($request->all(), [
+            '*.id' => 'required|exists:grades,id',
+            '*.subject_id' => 'required|exists:subjects,id',
+            '*.grade' => 'required|numeric|min:0|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $gradesData = $request->all();
+
+        foreach ($gradesData as $gradeData) {
+            $grade = Grade::where('child_id', $child_id)
+                ->where('id', $gradeData['id'])
+                ->first();
+
+            if ($grade) {
+                $grade->update([
+                    'subject_id' => $gradeData['subject_id'],
+                    'grade' => $gradeData['grade']
+                ]);
+            }
+        }
+
+        $updatedGrades = Grade::with('subject')->where('child_id', $child_id)->get();
+
+        return GradeWithSubjectResource::collection($updatedGrades);
+    }
 }
+
