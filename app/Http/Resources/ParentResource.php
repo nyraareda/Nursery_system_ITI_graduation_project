@@ -27,7 +27,9 @@ class ParentResource extends JsonResource
             'home_phone' => $this->home_phone,
             'street_number' => $this->street_number,
             'apartment_number' => $this->apartment_number,
-            'children' => ChildResource::collection($this->whenLoaded('children')),
+            'children' => $this->when($this->relationLoaded('children') && $this->children->isNotEmpty(), ChildResource::collection($this->children)),
+
+
         ];
     }
 }
