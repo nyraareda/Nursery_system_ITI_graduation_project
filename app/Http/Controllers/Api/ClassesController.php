@@ -55,11 +55,11 @@ class ClassesController extends Controller
 
     public function children($id)
     {
-        $class = Classes::with('children')->find($id);
+        $class = Classes::with(['children.parent.user', 'children.applications', 'children.grades.subject'])->find($id);
         if (!$class) {
             return response()->json(['message' => 'Class not found'], 404);
         }
 
-        return response()->json($class->children);
+        return ChildwithParentResource::collection($class->children);
     }
 }
