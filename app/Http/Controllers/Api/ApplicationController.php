@@ -13,51 +13,51 @@ class ApplicationController extends Controller
 {
     use ApiResponse;
 
-    // public function index(Request $request)
-    // {
-    //     $query = Application::with('child'); // Ensure 'child' relationship is loaded
-
-    //     // Filtering by child ID
-    //     if ($request->has('child_id')) {
-    //         $query->where('child_id', $request->child_id);
-    //     }
-
-    //     // Filtering by multiple statuses
-    //     if ($request->has('statuses')) {
-    //         $statuses = explode(',', $request->statuses);
-    //         $query->whereIn('status', $statuses);
-    //     }
-
-    //     // Searching by date submitted
-    //     if ($request->has('date_submitted')) {
-    //         $searchQuery = $request->date_submitted;
-    //         $query->whereDate('date_submitted', '=', $searchQuery);
-    //     }
-
-    //     // Sorting
-    //     if ($request->has('sort_by')) {
-    //         switch ($request->sort_by) {
-    //             case 'newest':
-    //                 $query->orderBy('created_at', 'desc');
-    //                 break;
-    //             case 'oldest':
-    //                 $query->orderBy('created_at', 'asc');
-    //                 break;
-    //             default:
-    //                 $query->orderBy('created_at', 'desc');
-    //                 break;
-    //         }
-    //     }
-
-    //     $applications = $query->paginate(2);
-    //     return ApplicationResource::collection($applications);
-    // }
-    public function index()
+    public function index(Request $request)
     {
-        $applications = Application::with('child')->paginate(3);
+        $query = Application::with('child'); // Ensure 'child' relationship is loaded
 
+        // Filtering by child ID
+        if ($request->has('child_id')) {
+            $query->where('child_id', $request->child_id);
+        }
+
+        // Filtering by multiple statuses
+        if ($request->has('statuses')) {
+            $statuses = explode(',', $request->statuses);
+            $query->whereIn('status', $statuses);
+        }
+
+        // Searching by date submitted
+        if ($request->has('date_submitted')) {
+            $searchQuery = $request->date_submitted;
+            $query->whereDate('date_submitted', '=', $searchQuery);
+        }
+
+        // Sorting
+        if ($request->has('sort_by')) {
+            switch ($request->sort_by) {
+                case 'newest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'oldest':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                default:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+
+        $applications = $query->get();
         return ApplicationResource::collection($applications);
     }
+    // public function index()
+    // {
+    //     $applications = Application::with('child')->paginate(3);
+
+    //     return ApplicationResource::collection($applications);
+    // }
 
     public function show($id)
     {
