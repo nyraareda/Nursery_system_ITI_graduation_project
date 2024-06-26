@@ -111,7 +111,10 @@ Route::post('grades', [GradesController::class, 'store']);
 Route::put('grades/{id}', [GradesController::class, 'update']);
 Route::delete('grades/{id}', [GradesController::class, 'destroy']);
 Route::get('grades/child/{child_id}', [GradesController::class, 'getGradesByChild']);
-    
+Route::put('grades/child/{child_id}', [GradesController::class, 'updateGradesByChild']);
+
+
+
 // Parent routes
 Route::get('parents', [ParentController::class, 'index']);
 Route::get('parents/{id}', [ParentController::class, 'show']);

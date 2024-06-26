@@ -11,7 +11,6 @@ use App\Http\Resources\ClassesResource;
 use App\Http\Resources\ChildwithParentResource;
 
 
-
 class ClassesController extends Controller
 {
     public function index()
