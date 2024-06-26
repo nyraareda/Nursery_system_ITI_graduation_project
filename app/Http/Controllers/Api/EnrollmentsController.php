@@ -23,34 +23,43 @@ class EnrollmentsController extends Controller
 
     {
         $enroll = Enrollment::with('child')->find($id);
-    
+
         if (! $enroll) {
             return $this->errorResponse('Enrollement not found', 404);
         }
-    
+
         return $this->successResponse(new EnrollmentsResource($enroll));
     }
 
     public function store(EnrollmentStoreRequest $request)
-        {
-        
-            $enroll = new Enrollment;
-            $enroll->child_id = $request->child_id;
-            $enroll->class_id = $request->class_id;
-            $enroll->description= $request->description;
-            $enroll->status = $request->status;
-            $enroll->date_enrolled = now();
-            $enroll->save();
-            
-            return $this->successResponse(new EnrollmentsResource($enroll), 'Enrollment added successfully');
+    {
+        $enroll = new Enrollment;
+        $enroll->child_id = $request->child_id;
+        $enroll->class_id = $request->class_id;
+        $enroll->description = $request->description;
+        $enroll->status = $request->status;
+        $enroll->date_enrolled = now();
+        $enroll->save();
+
+        // إضافة المواد الدراسية تلقائيًا
+        $subjects = Subject::where('class_id', $request->class_id)->get();
+        foreach ($subjects as $subject) {
+            Grade::create([
+                'child_id' => $request->child_id,
+                'subject_id' => $subject->id,
+                'grade' => 0, // الدرجة الافتراضية
+            ]);
         }
+
+        return $this->successResponse(new EnrollmentsResource($enroll), 'Enrollment and subjects added successfully');
+    }
 
         public function update(EnrollmentStoreRequest $request, $id)
     {
         $validatedData = $request->validated();
 
         $enrollment = Enrollment::find($id);
-    
+
         if (! $enrollment) {
             return $this->errorResponse('Enrollment not found', 404);
         }
@@ -65,7 +74,7 @@ class EnrollmentsController extends Controller
     public function destroy($id)
     {
         $enrollment = Enrollment::find($id);
-    
+
         if (! $enrollment) {
             return $this->errorResponse('Enrollment not found', 404);
         }

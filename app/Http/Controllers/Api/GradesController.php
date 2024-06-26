@@ -64,12 +64,10 @@ class GradesController extends Controller
 
         return GradeWithSubjectResource::collection($grades);
     }
-
     public function updateGradesByChild(Request $request, $child_id)
     {
         $validator = Validator::make($request->all(), [
             '*.id' => 'required|exists:grades,id',
-            '*.subject_id' => 'required|exists:subjects,id',
             '*.grade' => 'required|numeric|min:0|max:100',
         ]);
 
@@ -86,8 +84,7 @@ class GradesController extends Controller
 
             if ($grade) {
                 $grade->update([
-                    'subject_id' => $gradeData['subject_id'],
-                    'grade' => $gradeData['grade']
+                    'grade' => $gradeData['grade'],
                 ]);
             }
         }
@@ -96,5 +93,5 @@ class GradesController extends Controller
 
         return GradeWithSubjectResource::collection($updatedGrades);
     }
-}
 
+}
