@@ -11,7 +11,7 @@ class ActivitiesController extends Controller
 {
     public function index()
     {
-        $activities = Activity::with('child')->get(); // Eager load child relationship
+        $activities = Activity::with('child')->get(); 
         return response()->json($activities);
     }
 
@@ -50,5 +50,10 @@ class ActivitiesController extends Controller
 
         $activity->delete();
         return response()->json(['message' => 'Activity deleted successfully']);
+    }
+    public function getActivitiesForChild($childId)
+    {
+        $activities = Activity::where('child_id', $childId)->with('child')->get();
+        return response()->json($activities);
     }
 }

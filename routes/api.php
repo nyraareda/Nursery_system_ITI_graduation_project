@@ -96,7 +96,7 @@ Route::get('activities/{id}', [ActivitiesController::class, 'show']);
 Route::post('activities', [ActivitiesController::class, 'store']);
 Route::put('activities/{id}', [ActivitiesController::class, 'update']);
 Route::delete('activities/{id}', [ActivitiesController::class, 'destroy']);
-
+Route::get('activities/child/{childId}', [ActivitiesController::class, 'getActivitiesForChild']);
 // Curriculum routes
 Route::get('curriculums', [CurriculumController::class, 'index']);
 Route::get('curriculums/{id}', [CurriculumController::class, 'show']);
@@ -110,6 +110,7 @@ Route::get('grades/{id}', [GradesController::class, 'show']);
 Route::post('grades', [GradesController::class, 'store']);
 Route::put('grades/{id}', [GradesController::class, 'update']);
 Route::delete('grades/{id}', [GradesController::class, 'destroy']);
+Route::get('grades/child/{child_id}', [GradesController::class, 'getGradesByChild']);
 
 // Parent routes
 Route::get('parents', [ParentController::class, 'index']);

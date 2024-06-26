@@ -22,11 +22,14 @@ class ChildrenController extends Controller
         return $this->successResponse(ChildwithParentResource::collection($children), 'Children fetched successfully');
     }
 
-    public function index(Request $request)
+    
+        public function index(Request $request)
     {
-        $children = Child::with(['parent.user', 'applications', 'grades.subject'])->get();
+        $children = Child::with(['parent.user', 'applications', 'grades.subject'])->paginate(2); // Adjust '10' as per your pagination needs
+
         return ChildwithParentResource::collection($children);
     }
+    
 
     public function show($id)
     {
@@ -137,20 +140,4 @@ class ChildrenController extends Controller
         return $this->successResponse(null, 'Child deleted successfully');
     }
 
-    public function updateStatus(Request $request, $id)
-    {
-        $child = Child::with('applications')->find($id);
-        if (!$child) {
-            return $this->errorResponse('Child not found', 404);
-        }
-
-        $application = $child->applications()->first(); // Assuming one application per child
-        if ($application) {
-            $application->status = $request->get('status');
-            $application->save(); // Save the application status change
-            return $this->successResponse(new ChildwithParentResource($child), 'Application status updated successfully');
-        } else {
-            return $this->errorResponse('Application not found', 404);
-        }
     }
-}

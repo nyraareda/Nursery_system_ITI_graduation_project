@@ -52,6 +52,12 @@ class ApplicationController extends Controller
         $applications = $query->get();
         return ApplicationResource::collection($applications);
     }
+    // public function index()
+    // {
+    //     $applications = Application::with('child')->paginate(3);
+
+    //     return ApplicationResource::collection($applications);
+    // }
 
     public function show($id)
     {
