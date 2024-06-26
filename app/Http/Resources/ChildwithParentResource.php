@@ -8,6 +8,8 @@ class ChildwithParentResource extends JsonResource
 {
     public function toArray($request)
     {
+        $firstSubject = $this->subjects->first();
+
         return [
             'id' => $this->id,
             'full_name' => $this->full_name,
@@ -16,6 +18,8 @@ class ChildwithParentResource extends JsonResource
             'gender' => $this->gender,
             'photo' => $this->photo,
             'current_residence' => $this->current_residence,
+            'class_name' => $firstSubject,
+            'level' => $firstSubject,
             'parent' => [
                 'id' => $this->parent->id,
                 'first_name' => $this->parent->first_name,
