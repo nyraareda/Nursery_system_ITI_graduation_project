@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
+use App\Models\Child;
 use App\Http\Requests\StoreClassesRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\ClassesResource;
+use App\Http\Resources\ChildwithParentResource;
+
+
 
 class ClassesController extends Controller
 {
