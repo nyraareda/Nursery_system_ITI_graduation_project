@@ -93,6 +93,5 @@ class GradesController extends Controller
     
         return GradeWithSubjectResource::collection($updatedGrades);
     }
-    
-}
 
+}

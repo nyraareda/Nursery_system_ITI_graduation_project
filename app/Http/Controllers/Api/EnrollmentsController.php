@@ -23,11 +23,11 @@ class EnrollmentsController extends Controller
 
     {
         $enroll = Enrollment::with('child')->find($id);
-    
+
         if (! $enroll) {
             return $this->errorResponse('Enrollement not found', 404);
         }
-    
+
         return $this->successResponse(new EnrollmentsResource($enroll));
     }
 
@@ -40,7 +40,7 @@ class EnrollmentsController extends Controller
         $enroll->status = $request->status;
         $enroll->date_enrolled = now();
         $enroll->save();
-    
+
         // إضافة المواد الدراسية تلقائيًا
         $subjects = Subject::where('class_id', $request->class_id)->get();
         foreach ($subjects as $subject) {
@@ -50,16 +50,16 @@ class EnrollmentsController extends Controller
                 'grade' => 0, // الدرجة الافتراضية
             ]);
         }
-    
+
         return $this->successResponse(new EnrollmentsResource($enroll), 'Enrollment and subjects added successfully');
     }
-    
+
         public function update(EnrollmentStoreRequest $request, $id)
     {
         $validatedData = $request->validated();
 
         $enrollment = Enrollment::find($id);
-    
+
         if (! $enrollment) {
             return $this->errorResponse('Enrollment not found', 404);
         }
@@ -74,7 +74,7 @@ class EnrollmentsController extends Controller
     public function destroy($id)
     {
         $enrollment = Enrollment::find($id);
-    
+
         if (! $enrollment) {
             return $this->errorResponse('Enrollment not found', 404);
         }
