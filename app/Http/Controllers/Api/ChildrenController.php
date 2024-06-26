@@ -1,9 +1,9 @@
 <?php
 
-
 namespace App\Http\Controllers\Api;
 
 use App\Models\Child;
+use App\Models\Classes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ChildStoreRequest;
@@ -44,6 +44,15 @@ class ChildrenController extends Controller
 
     public function store(ChildStoreRequest $request)
     {
+
+        $existingEnrollment = Enrollment::where('child_id', $request->child_id)
+                                        ->where('class_id', $request->class_id)
+                                        ->first();
+
+        if ($existingEnrollment) {
+            return $this->errorResponse('Child is already enrolled in this class', 400);
+        }
+
         $child = new Child;
         $child->parent_id = $request->parent_id;
         $child->full_name = $request->full_name;
@@ -78,6 +87,15 @@ class ChildrenController extends Controller
 
         if (!$child) {
             return $this->errorResponse('Child not found', 404);
+        }
+
+
+        $existingEnrollment = Enrollment::where('child_id', $id)
+                                        ->where('class_id', $request->class_id)
+                                        ->first();
+
+        if ($existingEnrollment) {
+            return $this->errorResponse('Child is already enrolled in this class', 400);
         }
 
         $child->fill($validatedData);
