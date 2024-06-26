@@ -121,3 +121,4 @@ Route::get('parents/{id}', [ParentController::class, 'show']);
 Route::post('parents', [ParentController::class, 'store']);
 Route::put('parents/{id}', [ParentController::class, 'update']);
 Route::delete('parents/{id}', [ParentController::class, 'destroy']);
+Route::get('parent', [ParentController::class, 'getAllParents']);
