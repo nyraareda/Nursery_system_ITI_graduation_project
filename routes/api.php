@@ -76,12 +76,6 @@ Route::post('siblings', [SiblingController::class, 'store']);
 Route::put('siblings/{id}', [SiblingController::class, 'update']);
 Route::delete('siblings/{id}', [SiblingController::class, 'destroy']);
 
-// Notification routes
-Route::get('notifications', [NotificationController::class, 'index']);
-Route::get('notifications/{id}', [NotificationController::class, 'show']);
-Route::post('notifications', [NotificationController::class, 'store']);
-Route::put('notifications/{id}', [NotificationController::class, 'update']);
-Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
 
 // Class routes
 Route::get('classes', [ClassesController::class, 'index']);
