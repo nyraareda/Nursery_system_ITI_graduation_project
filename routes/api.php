@@ -12,9 +12,9 @@ use App\Http\Controllers\Api\SubjectsController;
 use App\Http\Controllers\Api\ActivitiesController;
 use App\Http\Controllers\Api\CurriculumController;
 use App\Http\Controllers\Api\GradesController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SiblingController;
 use App\Http\Controllers\Api\ParentController;
+use App\Http\Controllers\Api\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,3 +129,11 @@ Route::post('parents', [ParentController::class, 'store']);
 Route::put('parents/{id}', [ParentController::class, 'update']);
 Route::delete('parents/{id}', [ParentController::class, 'destroy']);
 Route::get('parent', [ParentController::class, 'getAllParents']);
+
+
+// Notification routes
+Route::get('notifications', [NotificationController::class, 'index']);
+Route::get('notifications/{id}', [NotificationController::class, 'show']);
+Route::post('notifications', [NotificationController::class, 'store']);
+Route::put('notifications/{id}', [NotificationController::class, 'update']);
+Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
