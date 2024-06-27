@@ -10,10 +10,12 @@ class ActivityResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'class_id' => $this->class_id,
-            'child_id' => $this->child_id,
             'activity_name' => $this->activity_name,
             'description' => $this->description,
+            'child_id' => $this->child_id,
+            'child_name' => $this->child->full_name,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
