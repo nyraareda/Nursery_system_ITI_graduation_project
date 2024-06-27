@@ -13,13 +13,13 @@ class EnrollmentsController extends Controller
 {
     use ApiResponse;
 
-    public function index()
+    public function index(Request $request)
     {
         $enrolls = Enrollment::with(['child', 'subjects','subjects.curriculum'])->get();
         return EnrollmentsResource::collection($enrolls);
     }
 
-    public function show($id)
+    public function show(Request $request,$id)
     {
         $enroll = Enrollment::with(['child', 'subjects','subjects.curriculum'])->find($id);
 
@@ -65,7 +65,7 @@ class EnrollmentsController extends Controller
 
     return $this->successResponse(new EnrollmentsResource($enrollment), 'Enrollment updated successfully');
 }
-public function destroy($id)
+public function destroy(Request $request,$id)
 {
     $enrollment = Enrollment::find($id);
 
@@ -77,7 +77,6 @@ public function destroy($id)
 
     return $this->successResponse($enrollment, 'Enrollment deleted successfully');
 }
-
 
 
 }

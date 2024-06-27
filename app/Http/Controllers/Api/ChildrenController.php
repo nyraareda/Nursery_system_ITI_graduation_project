@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ChildStoreRequest;
 use App\Http\Resources\ChildwithParentResource;
+use App\Http\Resources\ChildWithGradeResource;
 use App\Trait\ApiResponse;
 use Illuminate\Support\Facades\File;
 use App\Models\Application;
@@ -16,13 +17,6 @@ class ChildrenController extends Controller
 {
     use ApiResponse;
 
-    public function getChildrenByParentId($parentId)
-    {
-        $children = Child::with(['grades.subject'])->where('parent_id', $parentId)->get();
-        return $this->successResponse(ChildwithParentResource::collection($children), 'Children fetched successfully');
-    }
-
-    
         public function index(Request $request)
     {
         // $children = Child::with(['parent.user', 'applications', 'grades.subject'])->paginate(2); // Adjust '10' as per your pagination needs
@@ -122,4 +116,11 @@ class ChildrenController extends Controller
         return $this->successResponse(null, 'Child deleted successfully');
     }
 
+    public function getChildrenByParentId($parentId)
+    {
+        $children = Child::with(['grades.subject'])->where('parent_id', $parentId)->get();
+        return $this->successResponse(ChildwithParentResource::collection($children), 'Children fetched successfully');
     }
+
+
+}

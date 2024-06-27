@@ -55,6 +55,7 @@ Route::put('/applications/{id}', [ApplicationController::class, 'update']);
 Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
 
 
+
 Route::get('/packages', [PackageController::class, 'index']);
 Route::get('/packages/{id}', [PackageController::class, 'show']);
 Route::post('/packages', [PackageController::class, 'store']);
@@ -97,6 +98,8 @@ Route::post('subjects', [SubjectsController::class, 'store']);
 Route::put('subjects/{id}', [SubjectsController::class, 'update']);
 Route::delete('subjects/{id}', [SubjectsController::class, 'destroy']);
 Route::get('subjects/level/{levelId}', [SubjectsController::class, 'getByLevel']);
+Route::get('subjects/children-with-grades', [SubjectsController::class, 'getChildwithGrade']);
+
 
 // Activity routes
 Route::get('activities', [ActivitiesController::class, 'index']);

@@ -38,4 +38,5 @@ class Child extends Model
     {
         return $this->hasManyThrough(Subject::class, Grade::class, 'child_id', 'id', 'id', 'subject_id');
     }
+    
 }
