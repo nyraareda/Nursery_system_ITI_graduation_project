@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ChildStoreRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class ChildStoreRequest extends FormRequest
     {
         $rules = [
             'parent_id' => ['required', 'exists:parents,id'],
-            'full_name' => ['required', 'string', 'min:3'],
+            'full_name' => ['required', 'string', 'min:3',Rule::unique('children')->ignore($this->child)],
             'birthdate' => ['required', 'date_format:Y-m-d'],
             'place_of_birth' => ['required', 'string', 'min:3'],
             'gender' => ['required', 'in:male,female,other'],

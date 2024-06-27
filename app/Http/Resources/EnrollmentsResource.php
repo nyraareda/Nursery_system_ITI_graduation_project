@@ -16,11 +16,13 @@ class EnrollmentsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'class_id' => $this->class_id,
-            'description'=> $this->description,
-            'Child_enrolled' => new ChildResource($this->child),
-            'date_enrolled' => $this->date_enrolled,
-            'status'=> $this->status,
+            'child_id' => $this->child_id,
+            'description' => $this->description,
+            // 'date_enrolled' => $this->date_enrolled,
+            'status' => $this->status,
+            'child' => new ChildResource($this->whenLoaded('child')),
+            'subjects' =>new SubjectResource($this->whenLoaded('subjects')),
+            'curriculums' => new CurriculumResource($this->whenLoaded('subjects.curriculum')),
         ];
     }
 }

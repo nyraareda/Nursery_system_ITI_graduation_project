@@ -22,6 +22,6 @@ class Grade extends Model
 
     public function subject()
     {
-        return $this->belongsTo(Subject::class, 'subject_id');
+        return $this->belongsTo(Subject::class, 'subje3ct_id');
     }
 }

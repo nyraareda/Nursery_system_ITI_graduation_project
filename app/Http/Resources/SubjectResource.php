@@ -10,11 +10,9 @@ class SubjectResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'class_id' => $this->class_id,
-            'level_id' => $this->level_id,
             'subject_name' => $this->subject_name,
             'description' => $this->description,
-            'grades' => GradeResource::collection($this->whenLoaded('grades')),
+            'curriculum' => new CurriculumResource($this->whenLoaded('curriculum')),
         ];
     }
 }
