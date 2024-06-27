@@ -12,13 +12,13 @@ class CurriculumController extends Controller
 {
     public function index()
     {
-        $curriculums = Curriculum::with(['classes', 'subjects', 'activities'])->get();
+        $curriculums = Curriculum::with(['subjects', 'activities'])->get();
         return CurriculumResource::collection($curriculums);
     }
 
     public function show($id)
     {
-        $curriculum = Curriculum::with(['classes', 'subjects', 'activities'])->find($id);
+        $curriculum = Curriculum::with(['subjects', 'activities'])->find($id);
         if (!$curriculum) {
             return response()->json(['message' => 'Curriculum not found'], 404);
         }

@@ -22,7 +22,8 @@ class Curriculum extends Model
     }
 
     public function activities()
-    {
-        return $this->hasManyThrough(Activity::class, Classes::class, 'curriculum_id', 'class_id');
-    }
+{
+    return $this->hasManyThrough(Activity::class, Subject::class, 'curriculum_id', 'child_id');
+}
+
 }
