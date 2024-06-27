@@ -8,15 +8,18 @@ class StoreActivityRequest extends FormRequest
 {
     public function authorize()
     {
-        return true; 
+        return true;
     }
 
     public function rules()
     {
         return [
-            'class_id' => 'required|integer|exists:classes,id',
-            'activity_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            
+                'child_id' => 'nullable|integer|exists:children,id',
+                'activity_name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+
+
         ];
     }
 }

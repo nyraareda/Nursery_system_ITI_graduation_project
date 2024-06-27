@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Models\Child;
 use App\Http\Requests\StoreActivityRequest;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class ActivitiesController extends Controller
     public function index()
     {
         $activities = Activity::all();
-        \Log::info('Fetched Activities: ', $activities->toArray());
+        \Log::info('Fetched Activities: ', $activities->toArray()); // إضافة تسجيل
         return response()->json($activities);
     }
 
@@ -27,7 +27,10 @@ class ActivitiesController extends Controller
 
     public function store(StoreActivityRequest $request)
     {
+        // التحقق من صحة البيانات المستلمة من خلال StoreActivityRequest
         $validatedData = $request->validated();
+
+        // التحقق مما إذا كان الطالب مسجل بالفعل في النشاط
         $existingActivity = Activity::where('child_id', $validatedData['child_id'])
             ->where('activity_name', $validatedData['activity_name'])
             ->first();
@@ -36,7 +39,7 @@ class ActivitiesController extends Controller
             return response()->json(['message' => 'Child is already in this activity'], 400);
         }
 
-
+        // إنشاء نشاط جديد وربطه بالطفل المحدد
         $activity = new Activity();
         $activity->child_id = $validatedData['child_id'];
         $activity->activity_name = $validatedData['activity_name'];
