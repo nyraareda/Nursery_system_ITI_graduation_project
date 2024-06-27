@@ -16,10 +16,10 @@ class Curriculum extends Model
 
     protected $table = 'curriculums';
 
-    public function classes()
-    {
-        return $this->hasMany(Classes::class, 'curriculum_id');
-    }
+    // public function classes()
+    // {
+    //     return $this->hasMany(Classes::class, 'curriculum_id');
+    // }
 
     public function subjects()
     {

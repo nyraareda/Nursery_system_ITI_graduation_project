@@ -10,16 +10,13 @@ class Activity extends Model
     use HasFactory;
 
     protected $fillable = [
-        'class_id',
+
         'child_id',
         'activity_name',
         'description'
     ];
 
-    public function class()
-    {
-        return $this->belongsTo(Classes::class, 'class_id');
-    }
+   
 
     public function child()
     {
