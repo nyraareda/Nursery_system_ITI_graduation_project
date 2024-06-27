@@ -14,8 +14,6 @@ class CurriculumResource extends JsonResource
             'id' => $this->id,
             'level' => $this->level,
             'description' => $this->description,
-            'subjects' => SubjectResource::collection($this->whenLoaded('subjects'))
-
         ];
     }
 }

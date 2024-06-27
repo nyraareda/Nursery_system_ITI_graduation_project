@@ -11,8 +11,8 @@ class SubjectsController extends Controller
 {
     public function index()
     {
-        $subjects = Subject::all();
-        return response()->json($subjects);
+        $subjects = Subject::with('curriculum')->get();
+        return SubjectResource::collection($subjects);
     }
 
     public function show($id)
@@ -21,13 +21,14 @@ class SubjectsController extends Controller
         if (!$subject) {
             return response()->json(['message' => 'Subject not found'], 404);
         }
-        return response()->json($subject);
+        return new SubjectResource($subject);
     }
 
     public function store(StoreSubjectRequest $request)
     {
         $subject = Subject::create($request->validated());
-        return response()->json($subject, 201);
+        // $subject->load('curriculum');
+        return new SubjectResource($subject);
     }
 
     public function update(StoreSubjectRequest $request, $id)
@@ -38,7 +39,8 @@ class SubjectsController extends Controller
         }
 
         $subject->update($request->validated());
-        return response()->json($subject);
+        // $subject->load('curriculum');
+        return new SubjectResource($subject);
     }
 
     public function destroy($id)

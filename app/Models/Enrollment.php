@@ -8,7 +8,7 @@ class Enrollment extends Model
 {
     protected $fillable = [
         'child_id',
-        'class_id',
+        'subject_id', // Assuming this is how you relate enrollment to subjects
         'description',
         'date_enrolled',
         'status',
@@ -19,8 +19,9 @@ class Enrollment extends Model
         return $this->belongsTo(Child::class);
     }
 
-    public function classes()
+    public function subjects()
     {
-        return $this->belongsTo(Classes::class, 'class_id');
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
+    
 }

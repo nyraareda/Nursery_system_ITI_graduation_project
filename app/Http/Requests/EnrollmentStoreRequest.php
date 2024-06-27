@@ -23,14 +23,14 @@ class EnrollmentStoreRequest extends FormRequest
     {
             $rules = [
                 'child_id' => ['required', 'exists:children,id'],
-                'class_id' => ['required', 'exists:classes,id'],
+                'subject_id' => ['required', 'exists:subjects,id'],
                 'description' => ['required', 'string','min:5'],
-                'status' => ['required', 'in:active, completed, dropped'],
+                'status' => ['in:active, completed, dropped'],
             ];
 
             if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
                 $rules['child_id'] = ['sometimes', 'nullable', 'exists:children,id'];
-                $rules['class_id'] = ['sometimes', 'nullable', 'exists:classes,id'];
+                $rules['subject_id'] = ['sometimes', 'nullable', 'exists:subjects,id'];
                 $rules['description'] = ['sometimes', 'nullable', 'string','min:5'];
                 $rules['status'] = ['sometimes', 'nullable', 'in:active, completed, dropped'];
             }

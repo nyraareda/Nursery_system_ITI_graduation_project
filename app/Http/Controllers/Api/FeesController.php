@@ -81,7 +81,7 @@ public function update(FeeStoreRequest $request, $id)
     $fee = Fee::find($id);
     
     if (!$fee) {
-        return response()->json(['error' => 'Fee not found'], 404);
+        return $this->errorResponse('fee not found', 404);
     }
 
     $fee->fill($validatedData);
@@ -95,7 +95,7 @@ public function destroy($id)
     $fee = Fee::find($id);
 
     if (!$fee) {
-        return response()->json(['error' => 'Fee not found'], 404);
+        return $this->errorResponse('fee not found', 404);
     }
 
     $fee->delete();

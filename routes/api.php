@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ChildrenController;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\EnrollmentsController;
+use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClassesController;
 use App\Http\Controllers\Api\SubjectsController;
@@ -52,6 +53,13 @@ Route::get('/applications/{id}', [ApplicationController::class, 'show']);
 Route::post('/applications', [ApplicationController::class, 'store']);
 Route::put('/applications/{id}', [ApplicationController::class, 'update']);
 Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
+
+
+Route::get('/packages', [PackageController::class, 'index']);
+Route::get('/packages/{id}', [PackageController::class, 'show']);
+Route::post('/packages', [PackageController::class, 'store']);
+Route::put('/packages/{id}', [PackageController::class, 'update']);
+Route::delete('/packages/{id}', [PackageController::class, 'destroy']);
 
 // Enrollment routes
 Route::get('/enrollments', [EnrollmentsController::class, 'index']);
