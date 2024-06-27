@@ -23,7 +23,7 @@ class Curriculum extends Model
 
     public function subjects()
     {
-        return $this->hasMany(Subject::class, 'level_id');
+        return $this->hasMany(Subject::class, 'curriculum_id');
     }
 
     public function activities()

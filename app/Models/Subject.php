@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +10,7 @@ class Subject extends Model
 
     protected $fillable = [
         'class_id',
-        'level_id',
+        'curriculum_id', 
         'subject_name',
         'description'
     ];
@@ -23,7 +22,7 @@ class Subject extends Model
 
     public function curriculum()
     {
-        return $this->belongsTo(Curriculum::class, 'level_id');
+        return $this->belongsTo(Curriculum::class, 'curriculum_id'); 
     }
 
     public function grades()
