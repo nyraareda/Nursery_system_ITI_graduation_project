@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('child_id')->constrained('children')->onDelete('cascade');
+            $table->string('description');
             $table->decimal('amount', 8, 2);
             $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
             $table->date('due_date');

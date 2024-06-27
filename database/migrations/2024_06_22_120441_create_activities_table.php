@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
+            $table->foreignId('child_id')->constrained('children')->onDelete('cascade');
             $table->string('activity_name');
             $table->text('description')->nullable();
             $table->timestamps();
