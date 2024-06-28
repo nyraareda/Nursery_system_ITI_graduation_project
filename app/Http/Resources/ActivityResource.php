@@ -9,11 +9,12 @@ class ActivityResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'class_id' => $this->class_id,
-            'child_id' => $this->child_id,
-            'activity_name' => $this->activity_name,
-            'description' => $this->description,
-        ];
+                        'id' => $this->id,
+                        'activity_name' => $this->activity_name,
+                        'description' => $this->description,
+                        'child_id' => $this->child_id,
+                        'child_name' => $this->child->full_name,
+                        'child' => new ChildResource($this->whenLoaded('child')),
+                    ];
     }
 }
