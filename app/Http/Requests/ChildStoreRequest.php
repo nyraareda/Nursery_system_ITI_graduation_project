@@ -22,8 +22,8 @@ class ChildStoreRequest extends FormRequest
             'gender' => ['required', 'in:male,female,other'],
             'current_residence' => ['required', 'string', 'min:3'],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-            'class_id' => 'sometimes|nullable|integer|exists:classes,id',
-            'curriculum_id' => 'nullable|integer|exists:curriculums,id',        
+            //'class_id' => 'sometimes|nullable|integer|exists:classes,id',
+            'curriculum_id' => 'nullable|integer|exists:curriculums,id',
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
@@ -34,7 +34,7 @@ class ChildStoreRequest extends FormRequest
             $rules['gender'] = ['sometimes', 'nullable', 'in:male,female,other'];
             $rules['current_residence'] = ['sometimes', 'nullable', 'string', 'min:3'];
             $rules['photo'] = ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'];
-            $rules['class_id'] = ['sometimes', 'nullable', 'exists:classes,id']; // Make class_id optional for updates
+          //  $rules['class_id'] = ['sometimes', 'nullable', 'exists:classes,id']; // Make class_id optional for updates
             $rules['curriculum_id'] = ['sometimes', 'nullable', 'exists:curriculums,id']; // Make curriculum_id optional for updates
         }
 
@@ -54,8 +54,8 @@ class ChildStoreRequest extends FormRequest
             'current_residence.required' => 'The current residence field is required.',
             'photo.mimes' => 'The photo must be a file of type: jpeg, png, jpg, gif.',
             'photo.max' => 'The photo may not be greater than :max kilobytes in size.',
-            'class_id.required' => 'The class ID field is required.',
-            'class_id.exists' => 'The selected class ID does not exist.',
+            //'class_id.required' => 'The class ID field is required.',
+            //'class_id.exists' => 'The selected class ID does not exist.',
             'curriculum_id.required' => 'The curriculum ID field is required.',
             'curriculum_id.exists' => 'The selected curriculum ID does not exist.',
         ];

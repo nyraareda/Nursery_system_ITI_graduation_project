@@ -14,8 +14,8 @@ class StoreSubjectRequest extends FormRequest
     public function rules()
     {
         return [
-            
-                'curriculum_id' => 'nullable|integer|exists:classes,id',
+
+                'curriculum_id' => 'required|exists:curriculums,id',
                 'subject_name' => 'required|string|max:255',
                 'description' => 'nullable|string',
         ];

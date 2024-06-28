@@ -15,7 +15,7 @@ class GradeWithSubjectResource extends JsonResource
             'grade' => $this->grade,
             'subject' => [
                 'id' => $this->subject->id,
-                'class_id' => $this->subject->class_id,
+               // 'class_id' => $this->subject->class_id,
                 'level_id' => $this->subject->level_id,
                 'subject_name' => $this->subject->subject_name,
                 'description' => $this->subject->description,

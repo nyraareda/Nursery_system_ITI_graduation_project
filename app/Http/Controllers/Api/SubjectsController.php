@@ -28,7 +28,7 @@ class SubjectsController extends Controller
     public function store(StoreSubjectRequest $request)
     {
         $subject = Subject::create($request->validated());
-        // $subject->load('curriculum');
+        
         return new SubjectResource($subject);
     }
 
