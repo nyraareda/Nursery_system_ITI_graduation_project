@@ -15,7 +15,7 @@ class EnrollmentsController extends Controller
 
     public function index(Request $request)
     {
-        $enrolls = Enrollment::with(['child', 'subjects','subjects.curriculum'])->get();
+        $enrolls = Enrollment::with(['child', 'subjects','subjects.curriculum','activities'])->get();
         return EnrollmentsResource::collection($enrolls);
     }
 
