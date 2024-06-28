@@ -8,15 +8,16 @@ class StoreSubjectRequest extends FormRequest
 {
     public function authorize()
     {
-        return true; 
+        return true;
     }
 
     public function rules()
     {
         return [
-            'class_id' => 'required|integer|exists:classes,id',
-            'subject_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            
+                'curriculum_id' => 'nullable|integer|exists:classes,id',
+                'subject_name' => 'required|string|max:255',
+                'description' => 'nullable|string',
         ];
     }
 }

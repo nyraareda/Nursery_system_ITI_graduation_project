@@ -93,6 +93,7 @@ Route::put('subjects/{id}', [SubjectsController::class, 'update']);
 Route::delete('subjects/{id}', [SubjectsController::class, 'destroy']);
 Route::get('subjects/level/{levelId}', [SubjectsController::class, 'getByLevel']);
 Route::get('subjects/children-with-grades', [SubjectsController::class, 'getChildwithGrade']);
+Route::get('subjects/curriculum/{curriculum_id}', [SubjectsController::class, 'getByLevel']);
 
 
 // Activity routes
