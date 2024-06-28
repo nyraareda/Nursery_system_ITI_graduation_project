@@ -8,7 +8,7 @@ class Enrollment extends Model
 {
     protected $fillable = [
         'child_id',
-        'subject_id', // Assuming this is how you relate enrollment to subjects
+        'subject_id',
         'description',
         'date_enrolled',
         'status',
@@ -22,6 +22,11 @@ class Enrollment extends Model
     public function subjects()
     {
         return $this->belongsTo(Subject::class, 'subject_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasManyThrough(Activity::class, Child::class, 'id', 'child_id', 'child_id', 'id');
     }
     
 }

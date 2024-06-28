@@ -22,6 +22,7 @@ class EnrollmentsResource extends JsonResource
             'status' => $this->status,
             'child' => new ChildResource($this->whenLoaded('child')),
             'subjects' =>new SubjectResource($this->whenLoaded('subjects')),
+            'activities' =>NewActivityResource::collection($this->whenLoaded('activities')),
         ];
     }
 }

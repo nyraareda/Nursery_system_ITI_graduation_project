@@ -22,9 +22,8 @@ class NotificationController extends Controller
     {
         $notification = Notification::create($request->validated());
 
-        // إرسال الإشعار بالبريد الإلكتروني
         $parent = Parents::find($notification->parent_id);
-        $user = $parent->user; // يفترض أن Parents ترتبط بـ User
+        $user = $parent->user; 
         $user->notify(new NotificationEmail($notification));
 
         return new NotificationResource($notification);
