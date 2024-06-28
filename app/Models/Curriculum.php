@@ -26,4 +26,10 @@ class Curriculum extends Model
     return $this->hasManyThrough(Activity::class, Subject::class, 'curriculum_id', 'child_id');
 }
 
+public function children()
+{
+    return $this->belongsToMany(Child::class, 'child_curriculums', 'curriculum_id', 'child_id')
+                ->withTimestamps();
+}
+
 }

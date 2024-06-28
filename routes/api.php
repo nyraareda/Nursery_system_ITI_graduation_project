@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\GradesController;
 use App\Http\Controllers\SiblingController;
 use App\Http\Controllers\Api\ParentController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\ChildCurriculumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,13 +78,6 @@ Route::put('siblings/{id}', [SiblingController::class, 'update']);
 Route::delete('siblings/{id}', [SiblingController::class, 'destroy']);
 
 
-// Class routes
-Route::get('classes', [ClassesController::class, 'index']);
-Route::get('classes/{id}', [ClassesController::class, 'show']);
-Route::post('classes', [ClassesController::class, 'store']);
-Route::put('classes/{id}', [ClassesController::class, 'update']);
-Route::delete('classes/{id}', [ClassesController::class, 'destroy']);
-Route::get('classes/{id}/children', [ClassesController::class, 'children']);
 
 // Subject routes
 Route::get('subjects', [SubjectsController::class, 'index']);
@@ -142,3 +136,18 @@ Route::get('notifications/{id}', [NotificationController::class, 'show']);
 Route::post('notifications', [NotificationController::class, 'store']);
 Route::put('notifications/{id}', [NotificationController::class, 'update']);
 Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
+
+
+
+
+
+
+
+Route::get('child-curriculums', [ChildCurriculumController::class, 'index']);
+Route::get('child-curriculums/{id}', [ChildCurriculumController::class, 'show']);
+Route::post('child-curriculums', [ChildCurriculumController::class, 'store']);
+Route::put('child-curriculums/{id}', [ChildCurriculumController::class, 'update']);
+Route::delete('child-curriculums/{id}', [ChildCurriculumController::class, 'destroy']);
+Route::get('curriculums/{curriculum}/children', [ChildCurriculumController::class, 'getChildrenByCurriculum']);
+
+
