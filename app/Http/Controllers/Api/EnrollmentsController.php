@@ -21,7 +21,7 @@ class EnrollmentsController extends Controller
 
     public function show(Request $request,$id)
     {
-        $enroll = Enrollment::with(['child', 'subjects','subjects.curriculum'])->find($id);
+        $enroll = Enrollment::with(['child', 'subjects','subjects.curriculum','activity','activities'])->find($id);
 
         if (! $enroll) {
             return $this->errorResponse('Enrollment not found', 404);
