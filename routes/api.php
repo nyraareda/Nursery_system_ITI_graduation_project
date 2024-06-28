@@ -105,6 +105,9 @@ Route::post('activities/{id}/add-child', [ActivitiesController::class, 'addChild
 Route::get('activities/child/{childId}', [ActivitiesController::class, 'getActivitiesForChild']);
 Route::get('activities/{id}/details', [ActivitiesController::class, 'getActivityDetails']);
 Route::put('activities/{id}/details', [ActivitiesController::class, 'updateActivityDetails']);
+Route::delete('activities/delete-similar/{activityName}', [ActivitiesController::class, 'deleteSimilarActivities']);
+Route::put('activities/update-similar/{activityName}', [ActivitiesController::class, 'updateSimilarActivities']);
+Route::post('activities/simple', [ActivitiesController::class, 'storeActivityWithNameAndDescription']);
 // Curriculum routes
 Route::get('curriculums', [CurriculumController::class, 'index']);
 Route::get('curriculums/{id}', [CurriculumController::class, 'show']);

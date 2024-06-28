@@ -49,6 +49,17 @@ class ActivitiesController extends Controller
         return response()->json(['message' => 'Child added to activity successfully', 'activity' => $activity], 201);
     }
 
+    public function storeActivityWithNameAndDescription(Request $request)
+    {
+        $validatedData = $request->validate([
+            'activity_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+        $activity = Activity::create($validatedData);
+
+        return response()->json(['message' => 'Activity created successfully', 'activity' => $activity], 201);
+    }
+
     public function update(StoreActivityRequest $request, $id)
     {
         $activity = Activity::find($id);
@@ -103,6 +114,25 @@ class ActivitiesController extends Controller
 
         return response()->json(['message' => 'Child added to activity successfully']);
     }
+
+    public function deleteSimilarActivities($activityName)
+{
+    Activity::where('activity_name', $activityName)->delete();
+    return response()->json(['message' => 'Similar activities deleted successfully']);
+}
+
+
+public function updateSimilarActivities(Request $request, $activityName)
+{
+    $validatedData = $request->validate([
+        'activity_name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+    ]);
+    Activity::where('activity_name', $activityName)->update($validatedData);
+    return response()->json(['message' => 'Similar activities updated successfully']);
+}
+
+
 
     public function getActivityDetails($id)
     {
