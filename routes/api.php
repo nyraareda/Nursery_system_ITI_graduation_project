@@ -37,7 +37,10 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('email/verify/{id}', [AuthController::class, 'verify'])->name('verification.verify');
+    Route::post('/password/email', [AuthController::class, 'sendPasswordResetLink']);
+    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
 });
+
 
 // Children routes with resolved conflict
 Route::get('/children', [ChildrenController::class, 'index']);

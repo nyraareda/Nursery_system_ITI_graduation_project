@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Carbon;
 class AuthController extends Controller
 {
     /**
@@ -18,7 +23,7 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'sendPasswordResetLink', 'resetPassword']]);
     }
 
     /**
@@ -118,4 +123,63 @@ class AuthController extends Controller
         ]);
     }
 
+
+
+
+    public function sendPasswordResetLink(Request $request) {
+        $request->validate(['email' => 'required|email']);
+
+        // Check if the user exists
+        if (!User::where('email', $request->email)->exists()) {
+            return response(['message' => 'User does not exist'], 404);
+        }
+
+        // Generate a unique token
+        $token = Str::random(10);
+
+        try {
+            // Store the token in password_resets table
+            DB::table('password_resets')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+
+            // Send the reset password email
+            Mail::to($request->email)->send(new ResetPasswordMail($token, $request->email));
+
+            return response(['message' => 'Reset password email sent to user']);
+        } catch (\Exception $exception) {
+            return response(['message' => $exception->getMessage()], 400);
+        }
+    }
+
+    public function resetPassword(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'token' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+
+        // Find the password reset entry
+        $passwordReset = DB::table('password_resets')
+            ->where('email', $request->email)
+            ->where('token', $request->token)
+            ->first();
+
+        // Check if the token exists
+        if (!$passwordReset) {
+            return response(['message' => 'Invalid token or email'], 422);
+        }
+
+        // Update the user's password
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Delete the password reset entry
+        DB::table('password_resets')->where('email', $request->email)->delete();
+
+        return response(['message' => 'Password successfully reset']);
+    }
 }
