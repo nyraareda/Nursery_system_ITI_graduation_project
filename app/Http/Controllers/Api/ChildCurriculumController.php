@@ -19,12 +19,11 @@ class ChildCurriculumController extends Controller
 
     public function store(StoreChildCurriculumRequest $request)
     {
-        $exists = ChildCurriculum::where('child_id', $request->child_id)
-                            ->where('curriculum_id', $request->curriculum_id)
-                            ->exists();
+        // Check if the child is already enrolled in any curriculum
+        $existsInAnyCurriculum = ChildCurriculum::where('child_id', $request->child_id)->exists();
 
-        if ($exists) {
-            return response()->json(['message' => 'This child is already enrolled in this curriculum.'], 422);
+        if ($existsInAnyCurriculum) {
+            return response()->json(['message' => 'This child is already enrolled in a curriculum.'], 422);
         }
 
         $childCurriculum = ChildCurriculum::create($request->validated());
