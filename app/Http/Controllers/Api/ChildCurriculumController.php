@@ -62,8 +62,15 @@ class ChildCurriculumController extends Controller
 
     public function getChildrenByCurriculum($curriculumId)
     {
-        $curriculum = Curriculum::with(['children.subjects', 'children.grades', 'children.parent', 'children.applications'])->findOrFail($curriculumId);
+        $curriculum = Curriculum::with([
+            'children.subjects',
+            'children.grades',
+            'children.parent.user',
+            'children.applications'
+        ])->findOrFail($curriculumId);
 
         return ChildwithParentResource::collection($curriculum->children);
     }
+
+
 }

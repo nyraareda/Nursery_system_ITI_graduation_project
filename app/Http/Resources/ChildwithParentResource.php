@@ -8,8 +8,6 @@ class ChildwithParentResource extends JsonResource
 {
     public function toArray($request)
     {
-        $firstSubject = $this->subjects->first();
-
         return [
             'id' => $this->id,
             'full_name' => $this->full_name,
@@ -18,8 +16,8 @@ class ChildwithParentResource extends JsonResource
             'gender' => $this->gender,
             'photo' => $this->photo,
             'current_residence' => $this->current_residence,
-            'class_name' => $firstSubject,
-            'level' => $firstSubject,
+            'class_name' => optional($this->subjects->first())->name,
+            'level' => optional($this->subjects->first())->level,
             'parent' => [
                 'id' => $this->parent->id,
                 'first_name' => $this->parent->first_name,
@@ -33,12 +31,12 @@ class ChildwithParentResource extends JsonResource
                 ]
             ],
             'application' => [
-                'id' => $this->applications->first() ? $this->applications->first()->id : 'N/A',
-                'status' => $this->applications->first() ? $this->applications->first()->status : 'N/A',
-                'date_submitted' => $this->applications->first() ? $this->applications->first()->date_submitted : 'N/A',
+                'id' => optional($this->applications->first())->id,
+                'status' => optional($this->applications->first())->status,
+                'date_submitted' => optional($this->applications->first())->date_submitted,
             ],
-            'grades' => GradeResource::collection($this->whenLoaded('grades')),
-            'subjects' => SubjectResource::collection($this->whenLoaded('subjects'))
+            'grades' => GradeResource::collection($this->grades),
+            'subjects' => SubjectResource::collection($this->subjects)
         ];
     }
 }

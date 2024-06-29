@@ -11,7 +11,7 @@ class Subject extends Model
     protected $fillable = [
         'curriculum_id',
         'subject_name',
-        'description'
+        'description',
     ];
 
     public function curriculum()
@@ -19,13 +19,8 @@ class Subject extends Model
         return $this->belongsTo(Curriculum::class, 'curriculum_id');
     }
 
-    public function grades()
+    public function children()
     {
-        return $this->hasMany(Grade::class, 'subject_id');
-    }
-
-    public function enrollments()
-    {
-        return $this->belongsToMany(Enrollment::class);
+        return $this->belongsToMany(Child::class, 'child_subjects', 'subject_id', 'child_id');
     }
 }

@@ -21,7 +21,8 @@ class Child extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Parents::class, 'parent_id') ;
+   
+        return $this->belongsTo(Parents::class, 'parent_id');
     }
 
     public function applications()
@@ -36,9 +37,8 @@ class Child extends Model
 
     public function subjects()
     {
-        return $this->hasManyThrough(Subject::class, Grade::class, 'child_id', 'id', 'id', 'subject_id');
+        return $this->belongsToMany(Subject::class, 'child_subjects', 'child_id', 'subject_id');
     }
-    
 
     public function curriculums()
     {
