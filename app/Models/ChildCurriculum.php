@@ -16,13 +16,16 @@ class ChildCurriculum extends Model
         'curriculum_id',
     ];
 
+
     public function child()
     {
         return $this->belongsTo(Child::class);
     }
 
+
     public function curriculum()
     {
         return $this->belongsTo(Curriculum::class);
     }
+
 }

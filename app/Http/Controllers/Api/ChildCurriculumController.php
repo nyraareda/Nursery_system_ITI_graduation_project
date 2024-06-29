@@ -41,11 +41,24 @@ class ChildCurriculumController extends Controller
         return new ChildCurriculumResource($childCurriculum);
     }
 
-    public function destroy(ChildCurriculum $childCurriculum)
+    public function destroy($id)
     {
-        $childCurriculum->delete();
-        return response()->noContent();
+        \Log::info('Destroy method called with ID: ' . $id);
+
+        try {
+            $childCurriculum = ChildCurriculum::findOrFail($id);
+            \Log::info('ChildCurriculum found: ' . $childCurriculum);
+
+            $childCurriculum->delete();
+            \Log::info('ChildCurriculum deleted: ' . $id);
+
+            return response()->noContent();
+        } catch (\Exception $e) {
+            \Log::error('Failed to delete ChildCurriculum: ' . $e->getMessage());
+            return response()->json(['message' => 'Failed to delete the record: ' . $e->getMessage()], 500);
+        }
     }
+
 
     public function getChildrenByCurriculum($curriculumId)
     {
