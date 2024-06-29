@@ -29,7 +29,7 @@ class StoreChildCurriculumRequest extends FormRequest
     public function messages()
     {
         return [
-            'child_id.unique' => 'This child is already enrolled in this curriculum.',
+            'child_id.unique' => 'This child is already enrolled in a curriculum.',
         ];
     }
 }
