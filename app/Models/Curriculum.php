@@ -10,7 +10,7 @@ class Curriculum extends Model
     use HasFactory;
 
     protected $fillable = ['level', 'description'];
-    protected $table = 'curriculums'; 
+    protected $table = 'curriculums';
 
     public function subjects()
     {
@@ -21,5 +21,10 @@ class Curriculum extends Model
     {
         return $this->belongsToMany(Child::class, 'child_curriculums', 'curriculum_id', 'child_id')
                     ->withTimestamps();
+    }
+
+    public function activities()
+    {
+        return $this->hasManyThrough(Activity::class, Subject::class, 'curriculum_id', 'child_id');
     }
 }

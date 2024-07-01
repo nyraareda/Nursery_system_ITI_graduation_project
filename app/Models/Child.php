@@ -52,8 +52,5 @@ class Child extends Model
                     ->withTimestamps();
     }
 
-    public function activities()
-{
-    return $this->hasManyThrough(Activity::class, Subject::class, 'curriculum_id', 'child_id');
-}
+
 }
