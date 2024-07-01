@@ -51,4 +51,9 @@ class Child extends Model
         return $this->belongsToMany(Curriculum::class, 'child_curriculums', 'child_id', 'curriculum_id')
                     ->withTimestamps();
     }
+
+    public function activities()
+{
+    return $this->hasManyThrough(Activity::class, Subject::class, 'curriculum_id', 'child_id');
+}
 }
