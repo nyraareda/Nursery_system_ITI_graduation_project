@@ -153,6 +153,5 @@ Route::put('child-curriculums/{id}', [ChildCurriculumController::class, 'update'
 Route::delete('child-curriculums/{id}', [ChildCurriculumController::class, 'destroy']);
 Route::get('curriculums/{curriculum}/children', [ChildCurriculumController::class, 'getChildrenByCurriculum']);
 Route::get('curriculums/{curriculum}/children/{child}', [ChildCurriculumController::class, 'getChildById']);
-
-
+Route::get('curriculums/{curriculum}/children/{child}/subjects', [ChildCurriculumController::class, 'getSubjectsByCurriculumAndChild']);
 

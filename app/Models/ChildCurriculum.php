@@ -26,12 +26,8 @@ class ChildCurriculum extends Model
         return $this->belongsTo(Child::class);
     }
 
-
     public function curriculum()
     {
         return $this->belongsTo(Curriculum::class);
     }
-
-    
-
 }
