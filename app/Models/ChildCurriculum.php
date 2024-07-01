@@ -16,6 +16,10 @@ class ChildCurriculum extends Model
         'curriculum_id',
     ];
 
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'child_subjects', 'child_curriculum_id', 'subject_id');
+    }
 
     public function child()
     {
@@ -27,5 +31,7 @@ class ChildCurriculum extends Model
     {
         return $this->belongsTo(Curriculum::class);
     }
+
+    
 
 }

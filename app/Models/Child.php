@@ -21,7 +21,6 @@ class Child extends Model
 
     public function parent()
     {
-   
         return $this->belongsTo(Parents::class, 'parent_id');
     }
 
@@ -37,7 +36,14 @@ class Child extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'child_subjects', 'child_id', 'subject_id');
+        return $this->hasManyThrough(
+            Subject::class,
+            ChildCurriculum::class,
+            'child_id', // Foreign key on ChildCurriculum table...
+            'id', // Foreign key on Subject table...
+            'id', // Local key on Child table...
+            'curriculum_id' // Local key on ChildCurriculum table...
+        );
     }
 
     public function curriculums()

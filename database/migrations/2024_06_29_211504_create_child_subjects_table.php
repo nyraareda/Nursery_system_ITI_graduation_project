@@ -10,7 +10,7 @@ class CreateChildSubjectsTable extends Migration
     {
         Schema::create('child_subjects', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('child_id')->constrained()->onDelete('cascade');
+            $table->foreignId('child_curriculum_id')->constrained()->onDelete('cascade');
             $table->foreignId('subject_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

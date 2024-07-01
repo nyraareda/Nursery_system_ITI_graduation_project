@@ -21,6 +21,6 @@ class Subject extends Model
 
     public function children()
     {
-        return $this->belongsToMany(Child::class, 'child_subjects', 'subject_id', 'child_id');
+        return $this->belongsToMany(Child::class, 'child_subjects', 'subject_id', 'child_curriculum_id');
     }
 }

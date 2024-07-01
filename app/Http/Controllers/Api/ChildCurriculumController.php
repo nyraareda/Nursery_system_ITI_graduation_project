@@ -19,17 +19,24 @@ class ChildCurriculumController extends Controller
 
     public function store(StoreChildCurriculumRequest $request)
     {
-        // Check if the child is already enrolled in any curriculum
+
         $existsInAnyCurriculum = ChildCurriculum::where('child_id', $request->child_id)->exists();
 
         if ($existsInAnyCurriculum) {
             return response()->json(['message' => 'This child is already enrolled in a curriculum.'], 422);
         }
 
+
         $childCurriculum = ChildCurriculum::create($request->validated());
+
+
+        $subjects = Subject::where('curriculum_id', $request->curriculum_id)->get();
+
+
+        $childCurriculum->subjects()->attach($subjects->pluck('id'));
+
         return new ChildCurriculumResource($childCurriculum);
     }
-
     public function show(ChildCurriculum $childCurriculum)
     {
         return new ChildCurriculumResource($childCurriculum);
@@ -72,5 +79,12 @@ class ChildCurriculumController extends Controller
         return ChildwithParentResource::collection($curriculum->children);
     }
 
-
+    public function getChildById($childId)
+    {
+        $child = Child::with(['parent', 'application', 'grades.subject', 'subjects'])
+            ->findOrFail($childId);
+        return response()->json(['data' => $child]);
+    }
 }
+
+
