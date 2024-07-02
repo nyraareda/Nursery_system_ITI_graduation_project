@@ -10,6 +10,7 @@ use App\Models\ChildCurriculum;
 use App\Models\Subject;
 use App\Http\Resources\ChildwithParentResource;
 use App\Http\Resources\ChildCurriculumResource;
+use App\Http\Requests\StoreChildCurriculumRequest;
 
 class ChildCurriculumController extends Controller
 {

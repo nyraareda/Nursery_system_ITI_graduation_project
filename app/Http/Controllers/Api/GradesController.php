@@ -64,5 +64,5 @@ class GradesController extends Controller
         return GradeResource::collection($grades);
     }
 
-    
+
 }

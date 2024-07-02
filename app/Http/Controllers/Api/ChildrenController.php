@@ -23,7 +23,7 @@ class ChildrenController extends Controller
         $children = Child::with(['parent.user', 'applications', 'grades.subject'])->get();
         return ChildwithParentResource::collection($children);
     }
-    
+
 
     public function show($id)
     {

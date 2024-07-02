@@ -15,6 +15,8 @@ class GradeResource extends JsonResource
             'subject_id' => $this->subject_id,
             'grade' => $this->grade,
             'subject' => new SubjectResource($this->whenLoaded('subject')),
+            'created_at' => $this->created_at->toDateTimeString()
+
         ];
     }
 }
