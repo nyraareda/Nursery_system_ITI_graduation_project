@@ -133,7 +133,7 @@ Route::get('curriculums/{curriculum}/children/{child}/subjects', [ChildCurriculu
 
 });
 
-Route::group(['middleware' => ['api', 'auth:api', 'role:parent']], function () {
+// Route::group(['middleware' => ['api', 'auth:api', 'role:parent']], function () {
 
     Route::get('/children', [ChildrenController::class, 'index']);
     Route::get('/children/{id}', [ChildrenController::class, 'show']);
@@ -157,7 +157,7 @@ Route::put('parents/{id}', [ParentController::class, 'update']);
 
 Route::get('parent', [ParentController::class, 'getAllParents']);
 
-});
+// });
 
 Route::get('/packages', [PackageController::class, 'index']);
 Route::get('/packages/{id}', [PackageController::class, 'show']);
@@ -195,4 +195,4 @@ Route::delete('child-curriculums/{id}', [ChildCurriculumController::class, 'dest
 Route::get('curriculums/{curriculum}/children', [ChildCurriculumController::class, 'getChildrenByCurriculum']);
 Route::get('curriculums/{curriculum}/children/{child}', [ChildCurriculumController::class, 'getChildById']);
 Route::get('curriculums/{curriculum}/children/{child}/subjects', [ChildCurriculumController::class, 'getSubjectsByCurriculumAndChild']);
-Route::get('curriculums', [CurriculumController::class, 'index']);
+
