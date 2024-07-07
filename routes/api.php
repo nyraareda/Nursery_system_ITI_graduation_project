@@ -41,7 +41,7 @@ Route::group([
     Route::post('/password/reset', [AuthController::class, 'resetPassword']);
 });
 
-Route::group(['middleware' => ['api', 'auth:api', 'role:admin']], function () {
+// Route::group(['middleware' => ['api', 'auth:api', 'role:admin']], function () {
 
     Route::get('/children', [ChildrenController::class, 'index']);
     Route::get('/children/{id}', [ChildrenController::class, 'show']);
@@ -131,7 +131,7 @@ Route::get('curriculums/{curriculum}/children/{child}/subjects', [ChildCurriculu
 
 
 
-});
+// });
 
 // Route::group(['middleware' => ['api', 'auth:api', 'role:parent']], function () {
 
