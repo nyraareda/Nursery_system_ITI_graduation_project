@@ -8,7 +8,7 @@ use App\Models\Package;
 use App\Http\Resources\PackageResource;
 use App\Trait\ApiResponse;
 use App\Http\Requests\PackageStoreRequest;
-
+use Illuminate\Validation\ValidationException;
 
 class PackageController extends Controller
 {
@@ -20,53 +20,66 @@ class PackageController extends Controller
         return PackageResource::collection($packages);
     }
 
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
         $package = Package::findOrFail($id);
 
-        if(!$package)
-        {
-            return $this->errorResponse('package not found', 404);
+        if (!$package) {
+            return $this->errorResponse('Package not found', 404);
         }
 
         return $this->successResponse(new PackageResource($package));
-
     }
+
     public function store(PackageStoreRequest $request)
     {
+        try {
+            $package = new Package;
+            $package->name = $request->name;
+            $package->advantages = $request->advantages;
+            $package->price = $request->price;
+            $package->save();
 
-    $package = new Package;
-    $package->name = $request->name;
-    $package->advantages = $request->advantages;
-    $package->price = $request->price;
-
-    $package->save();
-    
-    return $this->successResponse(new PackageResource($package), 'package added successfully');
-}
-
-public function update(PackageStoreRequest $request, $id)
-{
-    $validatedData = $request->validated();
-    $package = Package::find($id);
-    
-    if (!$package) {
-        return $this->errorResponse('package not found', 404);
+            return $this->successResponse(new PackageResource($package), 'Package added successfully');
+        } catch (ValidationException $e) {
+            return $this->errorResponse($e->errors(), 422);
+        } catch (\Exception $e) {
+            return $this->errorResponse('An error occurred while adding the package', 500);
+        }
     }
 
-    $package->fill($validatedData);
-    $package->save();
+    public function update(PackageStoreRequest $request, $id)
+    {
+        try {
+            $package = Package::find($id);
 
-    return $this->successResponse(new PackageResource($package), 'Package updated successfully');
-}
-public function destroy($id)
-{
-    $package = Package::findOrFail($id);
+            if (!$package) {
+                return $this->errorResponse('Package not found', 404);
+            }
 
-    $package->delete();
+            $validatedData = $request->validated();
 
-    return $this->successResponse($package, 'Package deleted successfully');
-}
+            $package->fill($validatedData);
+            $package->save();
 
+            return $this->successResponse(new PackageResource($package), 'Package updated successfully');
+        } catch (ValidationException $e) {
+            return $this->errorResponse($e->errors(), 422);
+        } catch (\Exception $e) {
+            return $this->errorResponse('An error occurred while updating the package', 500);
+        }
+    }
 
+    public function destroy($id)
+    {
+        $package = Package::findOrFail($id);
+
+        if (!$package) {
+            return $this->errorResponse('Package not found', 404);
+        }
+
+        $package->delete();
+
+        return $this->successResponse(new PackageResource($package), 'Package deleted successfully');
+    }
 }

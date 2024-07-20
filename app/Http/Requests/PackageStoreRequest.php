@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+
 class PackageStoreRequest extends FormRequest
 {
     /**
@@ -21,19 +22,20 @@ class PackageStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $packageId = $this->route('package') ?? $this->route('id');
+
         $rules = [
-            'name' => ['required', 'string','min:5',Rule::unique('packages')->ignore($this->package)],
-            'advantages' => ['required', 'string','min:5'],
-            'price'=>['required','numeric','between:0,9999999.99'],
+            'name' => ['required', 'string', 'min:5', Rule::unique('packages')->ignore($packageId)],
+            'advantages' => ['required', 'string', 'min:5'],
+            'price' => ['required', 'numeric', 'between:0,9999999.99'],
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['name'] = ['sometimes', 'nullable', 'string','min:5',Rule::unique('packages')->ignore($this->package)];
-            $rules['advantages'] = ['sometimes', 'nullable', 'string','min:5'];
-            $rules['price'] = ['sometimes', 'nullable','numeric','between:0,9999999.99'];
+            $rules['name'] = ['sometimes', 'string', 'min:5', Rule::unique('packages')->ignore($packageId)];
+            $rules['advantages'] = ['sometimes', 'string', 'min:5'];
+            $rules['price'] = ['sometimes', 'numeric', 'between:0,9999999.99'];
         }
 
         return $rules;
-    
     }
 }
